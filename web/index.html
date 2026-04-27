@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+JP:wght@400;500;700&display=swap" />
-  <link rel="stylesheet" href="styles.css?v=11" />
+  <link rel="stylesheet" href="styles.css?v=12" />
 </head>
 <body>
   <aside class="sidebar">
@@ -93,7 +93,7 @@
         <button class="card-nav card-nav-next" id="card-next" type="button" aria-label="次の文">
           <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
         </button>
-        <div class="card-actions">
+        <div class="card-actions" id="card-actions-normal">
           <button class="reveal-btn" id="reveal-ja" type="button" aria-pressed="false" title="和訳を見る ( H )">
             <span class="reveal-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17a5 5 0 110-10 5 5 0 010 10zm0-8a3 3 0 100 6 3 3 0 000-6z"/></svg>
@@ -105,6 +105,24 @@
               <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zm0-10v2h14V7H7z"/></svg>
             </span>
             <span class="reveal-label">文型を見る</span>
+          </button>
+          <button class="reveal-btn reveal-btn-secondary" id="enter-exercise" type="button" title="構造を自分で配置する">
+            <span class="reveal-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M19.78 4.93l-1.41-1.41-2.12 2.12 1.41 1.41 2.12-2.12zM12 18.67l-7-7L3.59 13.08l7 7L21.34 9.34l-1.41-1.41L12 18.67z"/></svg>
+            </span>
+            <span class="reveal-label">構造演習</span>
+          </button>
+        </div>
+        <div class="card-actions card-actions-exercise" id="card-actions-exercise" hidden>
+          <span class="exercise-score" id="exercise-score"></span>
+          <button class="reveal-btn" id="exercise-check" type="button" title="答え合わせ">
+            <span class="reveal-label">答え合わせ</span>
+          </button>
+          <button class="reveal-btn reveal-btn-secondary" id="exercise-reset" type="button" title="やり直し">
+            <span class="reveal-label">やり直し</span>
+          </button>
+          <button class="reveal-btn reveal-btn-secondary" id="exit-exercise" type="button" title="演習を終了">
+            <span class="reveal-label">終了</span>
           </button>
         </div>
         <div class="card-progress">
@@ -211,6 +229,6 @@
     <div class="loading-text">教材を読み込んでいます…</div>
   </div>
 
-  <script src="app.js?v=11"></script>
+  <script src="app.js?v=12"></script>
 </body>
 </html>
