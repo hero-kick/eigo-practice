@@ -517,7 +517,9 @@ kbd {
   gap: 14px;
   padding: 14px 18px 14px;
   background: linear-gradient(180deg, transparent 0%, rgba(252, 250, 246, 0.85) 30%, #fcfaf6 100%);
+  flex-wrap: wrap;
 }
+.card-actions[hidden] { display: none !important; }
 
 .reveal-btn {
   appearance: none;
