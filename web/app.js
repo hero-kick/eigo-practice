@@ -18,7 +18,6 @@ const State = {
 function renderPassage(lesson) {
   renderPassageCard();
   renderProseView(lesson);
-  setupCardInteraction();
   applyJaReveal();
   applyStructureReveal();
 }
@@ -594,6 +593,7 @@ function setupBrandBack() {
     renderLessonSelector(State.lessons);
     setupTabs();
     setupBrandBack();
+    setupCardInteraction();
     const help = setupHelp();
     setupKeyboard(help);
     window.addEventListener("hashchange", route);
