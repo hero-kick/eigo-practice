@@ -1,0 +1,23 @@
+# Local server / tunnel artifacts
+tunnel.log
+tunnel-url.txt
+
+# Generated audio (large; not needed for web app)
+materials/*/audio/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node (in case scripts grow)
+node_modules/

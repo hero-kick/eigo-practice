@@ -1,0 +1,668 @@
+{
+  "id": "lesson-01",
+  "title": "How Some Americans May See Japanese Nightlife Culture",
+  "level": "高校英語・中級",
+  "level_note": "高校1〜2年生でも読めるレベル",
+  "audio": {
+    "language_code": "en-US",
+    "voice": "en-US-Neural2-D",
+    "voice_gender": "MALE",
+    "speeds": { "normal": 1.0, "slow": 0.85 }
+  },
+  "passage": {
+    "english": "In Japan, there are many kinds of nightlife businesses. Some of them are bars, clubs, hostess clubs, and adult entertainment businesses. For many Americans, these places may be difficult to understand at first.\n\nOne reason is that American culture often separates dating, friendship, and business more clearly. In the United States, if a man pays a woman to talk with him, some people may think it is strange or uncomfortable. They may ask, \"Is this really only conversation?\" or \"Is this safe for women?\" These questions come from American values about relationships and gender equality.\n\nHowever, in Japan, some people see hostess clubs as places for communication, relaxation, or business entertainment. A customer may go there not only for romance, but also to enjoy conversation after work. In some cases, businessmen use these places to build relationships with clients or coworkers. From this point of view, the service is not only about beauty or attraction. It is also about listening, talking, and creating a comfortable atmosphere.\n\nStill, many Americans may feel confused by this culture. They may think, \"Why do people pay for emotional attention?\" In American society, paying for this kind of service can feel very direct. It may seem less natural than meeting someone at a bar, dating app, or party.\n\nAdult entertainment businesses can create even stronger reactions. Some Americans may see them as a sign of gender inequality or exploitation. They may worry that women are treated like products. Other Americans may take a more liberal view and say that adults should be free to choose their work, as long as they are safe and not forced.\n\nSo, there is not only one American opinion. Some Americans may judge Japanese nightlife culture negatively. Others may be curious and try to understand it as part of Japanese society. The important point is that people often judge another culture through their own values.\n\nWhen we study this topic, we should be careful. We should not say, \"Japan is strange,\" or \"America is correct.\" Instead, we can ask better questions: What do people want from these places? Why do these businesses exist? What problems can happen? How do different cultures think about loneliness, work stress, gender, and money?\n\nBy asking these questions, we can understand both Japan and America more deeply.",
+    "japanese": "日本には、さまざまな夜の店があります。バー、クラブ、キャバクラ、性風俗店などです。多くのアメリカ人にとって、これらの場所は最初は理解しにくいかもしれません。\n\n理由の一つは、アメリカ文化では、恋愛、友情、仕事をよりはっきり分けて考えることが多いからです。アメリカでは、男性が女性にお金を払って会話する場合、それを奇妙だ、不快だと感じる人もいます。「本当に会話だけなのか」「女性にとって安全なのか」と疑問に思う人もいます。こうした疑問は、人間関係や男女平等に関するアメリカ的な価値観から来ています。\n\n一方で日本では、キャバクラをコミュニケーション、リラックス、接待の場所として見る人もいます。客は恋愛目的だけでなく、仕事の後に会話を楽しむために行くこともあります。場合によっては、ビジネスマンが取引先や同僚との関係作りのためにこうした店を使うこともあります。この見方では、サービスは美しさや魅力だけではありません。話を聞くこと、会話すること、心地よい雰囲気を作ることも含まれます。\n\nそれでも、多くのアメリカ人はこの文化に戸惑うかもしれません。「なぜ人は感情的な関心にお金を払うのか」と考えるかもしれません。アメリカ社会では、このようなサービスにお金を払うことはかなり直接的に感じられます。バー、マッチングアプリ、パーティーで誰かに会うよりも、不自然に見えることがあります。\n\n性風俗店は、さらに強い反応を生むことがあります。一部のアメリカ人は、それを男女不平等や搾取の表れだと見るかもしれません。女性が商品として扱われているのではないかと心配する人もいます。一方で、より自由主義的な見方をするアメリカ人は、安全で強制されていない限り、大人は自分の仕事を選ぶ自由があると言うかもしれません。\n\nつまり、アメリカ人の意見は一つではありません。日本の夜の文化を否定的に判断する人もいれば、日本社会の一部として理解しようとする人もいます。大切なのは、人はしばしば自分の価値観を通して他の文化を判断するという点です。\n\nこのテーマを学ぶとき、私たちは注意深くあるべきです。「日本は変だ」「アメリカが正しい」と言うべきではありません。代わりに、より良い問いを立てることができます。人々はこうした場所に何を求めているのか。なぜこのようなビジネスが存在するのか。どんな問題が起こりうるのか。文化によって、孤独、仕事のストレス、ジェンダー、お金についてどう考えるのか。\n\nこうした問いを持つことで、私たちは日本とアメリカの両方をより深く理解できます。",
+    "sentences": [
+      {
+        "id": 1, "paragraph": 1,
+        "en": "In Japan, there are many kinds of nightlife businesses.",
+        "ja": "日本には、さまざまな夜の店があります。",
+        "pattern": "SV", "pattern_note": "there 構文(thereは形式上の主語)",
+        "structure": [
+          { "text": "In Japan,", "role": "M" },
+          { "text": "there", "role": "expl" },
+          { "text": "are", "role": "V" },
+          { "text": "many kinds of nightlife businesses.", "role": "S" }
+        ],
+        "ja_structure": [
+          { "text": "日本には、", "role": "M" },
+          { "text": "さまざまな夜の店が", "role": "S" },
+          { "text": "あります。", "role": "V" }
+        ]
+      },
+      {
+        "id": 2, "paragraph": 1,
+        "en": "Some of them are bars, clubs, hostess clubs, and adult entertainment businesses.",
+        "ja": "バー、クラブ、キャバクラ、性風俗店などです。",
+        "pattern": "SVC",
+        "structure": [
+          { "text": "Some of them", "role": "S" },
+          { "text": "are", "role": "V" },
+          { "text": "bars, clubs, hostess clubs, and adult entertainment businesses.", "role": "C" }
+        ],
+        "ja_structure": [
+          { "text": "バー、クラブ、キャバクラ、性風俗店など", "role": "C" },
+          { "text": "です。", "role": "V" }
+        ]
+      },
+      {
+        "id": 3, "paragraph": 1,
+        "en": "For many Americans, these places may be difficult to understand at first.",
+        "ja": "多くのアメリカ人にとって、これらの場所は最初は理解しにくいかもしれません。",
+        "pattern": "SVC",
+        "structure": [
+          { "text": "For many Americans,", "role": "M" },
+          { "text": "these places", "role": "S" },
+          { "text": "may be", "role": "V" },
+          { "text": "difficult to understand", "role": "C" },
+          { "text": "at first.", "role": "M" }
+        ],
+        "ja_structure": [
+          { "text": "多くのアメリカ人にとって、", "role": "M" },
+          { "text": "これらの場所は", "role": "S" },
+          { "text": "最初は", "role": "M" },
+          { "text": "理解しにくい", "role": "C" },
+          { "text": "かもしれません。", "role": "V" }
+        ]
+      },
+      {
+        "id": 4, "paragraph": 2,
+        "en": "One reason is that American culture often separates dating, friendship, and business more clearly.",
+        "ja": "理由の一つは、アメリカ文化では、恋愛、友情、仕事をよりはっきり分けて考えることが多いからです。",
+        "pattern": "SVC", "pattern_note": "C は that 節",
+        "structure": [
+          { "text": "One reason", "role": "S" },
+          { "text": "is", "role": "V" },
+          { "text": "that American culture often separates dating, friendship, and business more clearly.", "role": "C" }
+        ],
+        "ja_structure": [
+          { "text": "理由の一つは、", "role": "S" },
+          { "text": "アメリカ文化では、恋愛、友情、仕事をよりはっきり分けて考えることが多いから", "role": "C" },
+          { "text": "です。", "role": "V" }
+        ]
+      },
+      {
+        "id": 5, "paragraph": 2,
+        "en": "In the United States, if a man pays a woman to talk with him, some people may think it is strange or uncomfortable.",
+        "ja": "アメリカでは、男性が女性にお金を払って会話する場合、それを奇妙だ、不快だと感じる人もいます。",
+        "pattern": "SVO", "pattern_note": "O は that 節(that 省略)",
+        "structure": [
+          { "text": "In the United States,", "role": "M" },
+          { "text": "if a man pays a woman to talk with him,", "role": "M" },
+          { "text": "some people", "role": "S" },
+          { "text": "may think", "role": "V" },
+          { "text": "it is strange or uncomfortable.", "role": "O" }
+        ],
+        "ja_structure": [
+          { "text": "アメリカでは、", "role": "M" },
+          { "text": "男性が女性にお金を払って会話する場合、", "role": "M" },
+          { "text": "それを奇妙だ、不快だと感じる人も", "role": "S" },
+          { "text": "います。", "role": "V" }
+        ]
+      },
+      {
+        "id": 6, "paragraph": 2,
+        "en": "They may ask, \"Is this really only conversation?\" or \"Is this safe for women?\"",
+        "ja": "「本当に会話だけなのか」「女性にとって安全なのか」と疑問に思う人もいます。",
+        "pattern": "SVO", "pattern_note": "O は引用文",
+        "structure": [
+          { "text": "They", "role": "S" },
+          { "text": "may ask,", "role": "V" },
+          { "text": "\"Is this really only conversation?\" or \"Is this safe for women?\"", "role": "O" }
+        ],
+        "ja_structure": [
+          { "text": "「本当に会話だけなのか」「女性にとって安全なのか」と", "role": "O" },
+          { "text": "疑問に思う人も", "role": "S" },
+          { "text": "います。", "role": "V" }
+        ]
+      },
+      {
+        "id": 7, "paragraph": 2,
+        "en": "These questions come from American values about relationships and gender equality.",
+        "ja": "こうした疑問は、人間関係や男女平等に関するアメリカ的な価値観から来ています。",
+        "pattern": "SV",
+        "structure": [
+          { "text": "These questions", "role": "S" },
+          { "text": "come", "role": "V" },
+          { "text": "from American values about relationships and gender equality.", "role": "M" }
+        ],
+        "ja_structure": [
+          { "text": "こうした疑問は、", "role": "S" },
+          { "text": "人間関係や男女平等に関するアメリカ的な価値観から", "role": "M" },
+          { "text": "来ています。", "role": "V" }
+        ]
+      },
+      {
+        "id": 8, "paragraph": 3,
+        "en": "However, in Japan, some people see hostess clubs as places for communication, relaxation, or business entertainment.",
+        "ja": "一方で日本では、キャバクラをコミュニケーション、リラックス、接待の場所として見る人もいます。",
+        "pattern": "SVOC", "pattern_note": "see X as Y",
+        "structure": [
+          { "text": "However,", "role": "M" },
+          { "text": "in Japan,", "role": "M" },
+          { "text": "some people", "role": "S" },
+          { "text": "see", "role": "V" },
+          { "text": "hostess clubs", "role": "O" },
+          { "text": "as places for communication, relaxation, or business entertainment.", "role": "C" }
+        ],
+        "ja_structure": [
+          { "text": "一方で", "role": "M" },
+          { "text": "日本では、", "role": "M" },
+          { "text": "キャバクラを", "role": "O" },
+          { "text": "コミュニケーション、リラックス、接待の場所として", "role": "C" },
+          { "text": "見る人も", "role": "S" },
+          { "text": "います。", "role": "V" }
+        ]
+      },
+      {
+        "id": 9, "paragraph": 3,
+        "en": "A customer may go there not only for romance, but also to enjoy conversation after work.",
+        "ja": "客は恋愛目的だけでなく、仕事の後に会話を楽しむために行くこともあります。",
+        "pattern": "SV",
+        "structure": [
+          { "text": "A customer", "role": "S" },
+          { "text": "may go", "role": "V" },
+          { "text": "there", "role": "M" },
+          { "text": "not only for romance, but also to enjoy conversation after work.", "role": "M" }
+        ],
+        "ja_structure": [
+          { "text": "客は", "role": "S" },
+          { "text": "恋愛目的だけでなく、", "role": "M" },
+          { "text": "仕事の後に会話を楽しむために", "role": "M" },
+          { "text": "行くこともあります。", "role": "V" }
+        ]
+      },
+      {
+        "id": 10, "paragraph": 3,
+        "en": "In some cases, businessmen use these places to build relationships with clients or coworkers.",
+        "ja": "場合によっては、ビジネスマンが取引先や同僚との関係作りのためにこうした店を使うこともあります。",
+        "pattern": "SVO",
+        "structure": [
+          { "text": "In some cases,", "role": "M" },
+          { "text": "businessmen", "role": "S" },
+          { "text": "use", "role": "V" },
+          { "text": "these places", "role": "O" },
+          { "text": "to build relationships with clients or coworkers.", "role": "M" }
+        ],
+        "ja_structure": [
+          { "text": "場合によっては、", "role": "M" },
+          { "text": "ビジネスマンが", "role": "S" },
+          { "text": "取引先や同僚との関係作りのために", "role": "M" },
+          { "text": "こうした店を", "role": "O" },
+          { "text": "使うこともあります。", "role": "V" }
+        ]
+      },
+      {
+        "id": 11, "paragraph": 3,
+        "en": "From this point of view, the service is not only about beauty or attraction.",
+        "ja": "この見方では、サービスは美しさや魅力だけではありません。",
+        "pattern": "SVC",
+        "structure": [
+          { "text": "From this point of view,", "role": "M" },
+          { "text": "the service", "role": "S" },
+          { "text": "is", "role": "V" },
+          { "text": "not only about beauty or attraction.", "role": "C" }
+        ],
+        "ja_structure": [
+          { "text": "この見方では、", "role": "M" },
+          { "text": "サービスは", "role": "S" },
+          { "text": "美しさや魅力だけ", "role": "C" },
+          { "text": "ではありません。", "role": "V" }
+        ]
+      },
+      {
+        "id": 12, "paragraph": 3,
+        "en": "It is also about listening, talking, and creating a comfortable atmosphere.",
+        "ja": "話を聞くこと、会話すること、心地よい雰囲気を作ることも含まれます。",
+        "pattern": "SVC",
+        "structure": [
+          { "text": "It", "role": "S" },
+          { "text": "is", "role": "V" },
+          { "text": "also about listening, talking, and creating a comfortable atmosphere.", "role": "C" }
+        ],
+        "ja_structure": [
+          { "text": "話を聞くこと、会話すること、心地よい雰囲気を作ることも", "role": "C" },
+          { "text": "含まれます。", "role": "V" }
+        ]
+      },
+      {
+        "id": 13, "paragraph": 4,
+        "en": "Still, many Americans may feel confused by this culture.",
+        "ja": "それでも、多くのアメリカ人はこの文化に戸惑うかもしれません。",
+        "pattern": "SVC",
+        "structure": [
+          { "text": "Still,", "role": "M" },
+          { "text": "many Americans", "role": "S" },
+          { "text": "may feel", "role": "V" },
+          { "text": "confused", "role": "C" },
+          { "text": "by this culture.", "role": "M" }
+        ],
+        "ja_structure": [
+          { "text": "それでも、", "role": "M" },
+          { "text": "多くのアメリカ人は", "role": "S" },
+          { "text": "この文化に", "role": "M" },
+          { "text": "戸惑うかもしれません。", "role": "V" }
+        ]
+      },
+      {
+        "id": 14, "paragraph": 4,
+        "en": "They may think, \"Why do people pay for emotional attention?\"",
+        "ja": "「なぜ人は感情的な関心にお金を払うのか」と考えるかもしれません。",
+        "pattern": "SVO", "pattern_note": "O は引用文",
+        "structure": [
+          { "text": "They", "role": "S" },
+          { "text": "may think,", "role": "V" },
+          { "text": "\"Why do people pay for emotional attention?\"", "role": "O" }
+        ],
+        "ja_structure": [
+          { "text": "「なぜ人は感情的な関心にお金を払うのか」と", "role": "O" },
+          { "text": "考えるかもしれません。", "role": "V" }
+        ]
+      },
+      {
+        "id": 15, "paragraph": 4,
+        "en": "In American society, paying for this kind of service can feel very direct.",
+        "ja": "アメリカ社会では、このようなサービスにお金を払うことはかなり直接的に感じられます。",
+        "pattern": "SVC", "pattern_note": "S は動名詞句",
+        "structure": [
+          { "text": "In American society,", "role": "M" },
+          { "text": "paying for this kind of service", "role": "S" },
+          { "text": "can feel", "role": "V" },
+          { "text": "very direct.", "role": "C" }
+        ],
+        "ja_structure": [
+          { "text": "アメリカ社会では、", "role": "M" },
+          { "text": "このようなサービスにお金を払うことは", "role": "S" },
+          { "text": "かなり直接的に", "role": "C" },
+          { "text": "感じられます。", "role": "V" }
+        ]
+      },
+      {
+        "id": 16, "paragraph": 4,
+        "en": "It may seem less natural than meeting someone at a bar, dating app, or party.",
+        "ja": "バー、マッチングアプリ、パーティーで誰かに会うよりも、不自然に見えることがあります。",
+        "pattern": "SVC",
+        "structure": [
+          { "text": "It", "role": "S" },
+          { "text": "may seem", "role": "V" },
+          { "text": "less natural", "role": "C" },
+          { "text": "than meeting someone at a bar, dating app, or party.", "role": "M" }
+        ],
+        "ja_structure": [
+          { "text": "バー、マッチングアプリ、パーティーで誰かに会うよりも、", "role": "M" },
+          { "text": "不自然に", "role": "C" },
+          { "text": "見えることがあります。", "role": "V" }
+        ]
+      },
+      {
+        "id": 17, "paragraph": 5,
+        "en": "Adult entertainment businesses can create even stronger reactions.",
+        "ja": "性風俗店は、さらに強い反応を生むことがあります。",
+        "pattern": "SVO",
+        "structure": [
+          { "text": "Adult entertainment businesses", "role": "S" },
+          { "text": "can create", "role": "V" },
+          { "text": "even stronger reactions.", "role": "O" }
+        ],
+        "ja_structure": [
+          { "text": "性風俗店は、", "role": "S" },
+          { "text": "さらに強い反応を", "role": "O" },
+          { "text": "生むことがあります。", "role": "V" }
+        ]
+      },
+      {
+        "id": 18, "paragraph": 5,
+        "en": "Some Americans may see them as a sign of gender inequality or exploitation.",
+        "ja": "一部のアメリカ人は、それを男女不平等や搾取の表れだと見るかもしれません。",
+        "pattern": "SVOC", "pattern_note": "see X as Y",
+        "structure": [
+          { "text": "Some Americans", "role": "S" },
+          { "text": "may see", "role": "V" },
+          { "text": "them", "role": "O" },
+          { "text": "as a sign of gender inequality or exploitation.", "role": "C" }
+        ],
+        "ja_structure": [
+          { "text": "一部のアメリカ人は、", "role": "S" },
+          { "text": "それを", "role": "O" },
+          { "text": "男女不平等や搾取の表れだと", "role": "C" },
+          { "text": "見るかもしれません。", "role": "V" }
+        ]
+      },
+      {
+        "id": 19, "paragraph": 5,
+        "en": "They may worry that women are treated like products.",
+        "ja": "女性が商品として扱われているのではないかと心配する人もいます。",
+        "pattern": "SVO", "pattern_note": "O は that 節",
+        "structure": [
+          { "text": "They", "role": "S" },
+          { "text": "may worry", "role": "V" },
+          { "text": "that women are treated like products.", "role": "O" }
+        ],
+        "ja_structure": [
+          { "text": "女性が商品として扱われているのではないかと", "role": "O" },
+          { "text": "心配する人も", "role": "S" },
+          { "text": "います。", "role": "V" }
+        ]
+      },
+      {
+        "id": 20, "paragraph": 5,
+        "en": "Other Americans may take a more liberal view and say that adults should be free to choose their work, as long as they are safe and not forced.",
+        "ja": "一方で、より自由主義的な見方をするアメリカ人は、安全で強制されていない限り、大人は自分の仕事を選ぶ自由があると言うかもしれません。",
+        "pattern": "SVO+VO", "pattern_note": "並列述語(take ... and say ...)",
+        "structure": [
+          { "text": "Other Americans", "role": "S" },
+          { "text": "may take", "role": "V" },
+          { "text": "a more liberal view", "role": "O" },
+          { "text": "and say", "role": "V" },
+          { "text": "that adults should be free to choose their work, as long as they are safe and not forced.", "role": "O" }
+        ],
+        "ja_structure": [
+          { "text": "一方で、", "role": "M" },
+          { "text": "より自由主義的な見方をするアメリカ人は、", "role": "S" },
+          { "text": "安全で強制されていない限り、", "role": "M" },
+          { "text": "大人は自分の仕事を選ぶ自由があると", "role": "O" },
+          { "text": "言うかもしれません。", "role": "V" }
+        ]
+      },
+      {
+        "id": 21, "paragraph": 6,
+        "en": "So, there is not only one American opinion.",
+        "ja": "つまり、アメリカ人の意見は一つではありません。",
+        "pattern": "SV", "pattern_note": "there 構文",
+        "structure": [
+          { "text": "So,", "role": "M" },
+          { "text": "there", "role": "expl" },
+          { "text": "is", "role": "V" },
+          { "text": "not only one American opinion.", "role": "S" }
+        ],
+        "ja_structure": [
+          { "text": "つまり、", "role": "M" },
+          { "text": "アメリカ人の意見は", "role": "S" },
+          { "text": "一つでは", "role": "C" },
+          { "text": "ありません。", "role": "V" }
+        ]
+      },
+      {
+        "id": 22, "paragraph": 6,
+        "en": "Some Americans may judge Japanese nightlife culture negatively.",
+        "ja": "日本の夜の文化を否定的に判断する人もいます。",
+        "pattern": "SVO",
+        "structure": [
+          { "text": "Some Americans", "role": "S" },
+          { "text": "may judge", "role": "V" },
+          { "text": "Japanese nightlife culture", "role": "O" },
+          { "text": "negatively.", "role": "M" }
+        ],
+        "ja_structure": [
+          { "text": "日本の夜の文化を", "role": "O" },
+          { "text": "否定的に", "role": "M" },
+          { "text": "判断する人も", "role": "S" },
+          { "text": "います。", "role": "V" }
+        ]
+      },
+      {
+        "id": 23, "paragraph": 6,
+        "en": "Others may be curious and try to understand it as part of Japanese society.",
+        "ja": "また、興味を持って日本社会の一部として理解しようとする人もいます。",
+        "pattern": "SVC+VO", "pattern_note": "並列述語(be curious and try ...)",
+        "structure": [
+          { "text": "Others", "role": "S" },
+          { "text": "may be", "role": "V" },
+          { "text": "curious", "role": "C" },
+          { "text": "and try", "role": "V" },
+          { "text": "to understand it as part of Japanese society.", "role": "O" }
+        ],
+        "ja_structure": [
+          { "text": "また、", "role": "M" },
+          { "text": "興味を持って", "role": "C" },
+          { "text": "日本社会の一部として", "role": "M" },
+          { "text": "理解しようとする人も", "role": "S" },
+          { "text": "います。", "role": "V" }
+        ]
+      },
+      {
+        "id": 24, "paragraph": 6,
+        "en": "The important point is that people often judge another culture through their own values.",
+        "ja": "大切なのは、人はしばしば自分の価値観を通して他の文化を判断するという点です。",
+        "pattern": "SVC", "pattern_note": "C は that 節",
+        "structure": [
+          { "text": "The important point", "role": "S" },
+          { "text": "is", "role": "V" },
+          { "text": "that people often judge another culture through their own values.", "role": "C" }
+        ],
+        "ja_structure": [
+          { "text": "大切なのは、", "role": "S" },
+          { "text": "人はしばしば自分の価値観を通して他の文化を判断するという点", "role": "C" },
+          { "text": "です。", "role": "V" }
+        ]
+      },
+      {
+        "id": 25, "paragraph": 7,
+        "en": "When we study this topic, we should be careful.",
+        "ja": "このテーマを学ぶとき、私たちは注意深くあるべきです。",
+        "pattern": "SVC",
+        "structure": [
+          { "text": "When we study this topic,", "role": "M" },
+          { "text": "we", "role": "S" },
+          { "text": "should be", "role": "V" },
+          { "text": "careful.", "role": "C" }
+        ],
+        "ja_structure": [
+          { "text": "このテーマを学ぶとき、", "role": "M" },
+          { "text": "私たちは", "role": "S" },
+          { "text": "注意深く", "role": "C" },
+          { "text": "あるべきです。", "role": "V" }
+        ]
+      },
+      {
+        "id": 26, "paragraph": 7,
+        "en": "We should not say, \"Japan is strange,\" or \"America is correct.\"",
+        "ja": "「日本は変だ」「アメリカが正しい」と言うべきではありません。",
+        "pattern": "SVO", "pattern_note": "O は引用文",
+        "structure": [
+          { "text": "We", "role": "S" },
+          { "text": "should not say,", "role": "V" },
+          { "text": "\"Japan is strange,\" or \"America is correct.\"", "role": "O" }
+        ],
+        "ja_structure": [
+          { "text": "「日本は変だ」「アメリカが正しい」と", "role": "O" },
+          { "text": "言うべきではありません。", "role": "V" }
+        ]
+      },
+      {
+        "id": 27, "paragraph": 7,
+        "en": "Instead, we can ask better questions: What do people want from these places?",
+        "ja": "代わりに、より良い問いを立てることができます。人々はこうした場所に何を求めているのか。",
+        "pattern": "SVO",
+        "structure": [
+          { "text": "Instead,", "role": "M" },
+          { "text": "we", "role": "S" },
+          { "text": "can ask", "role": "V" },
+          { "text": "better questions: What do people want from these places?", "role": "O" }
+        ],
+        "ja_structure": [
+          { "text": "代わりに、", "role": "M" },
+          { "text": "より良い問いを立てることができます。", "role": "V" },
+          { "text": "人々はこうした場所に何を求めているのか。", "role": "O" }
+        ]
+      },
+      {
+        "id": 28, "paragraph": 7,
+        "en": "Why do these businesses exist?",
+        "ja": "なぜこのようなビジネスが存在するのか。",
+        "pattern": "SV", "pattern_note": "疑問文",
+        "structure": [
+          { "text": "Why", "role": "M" },
+          { "text": "do", "role": "V" },
+          { "text": "these businesses", "role": "S" },
+          { "text": "exist?", "role": "V" }
+        ],
+        "ja_structure": [
+          { "text": "なぜ", "role": "M" },
+          { "text": "このようなビジネスが", "role": "S" },
+          { "text": "存在するのか。", "role": "V" }
+        ]
+      },
+      {
+        "id": 29, "paragraph": 7,
+        "en": "What problems can happen?",
+        "ja": "どんな問題が起こりうるのか。",
+        "pattern": "SV", "pattern_note": "疑問文",
+        "structure": [
+          { "text": "What problems", "role": "S" },
+          { "text": "can happen?", "role": "V" }
+        ],
+        "ja_structure": [
+          { "text": "どんな問題が", "role": "S" },
+          { "text": "起こりうるのか。", "role": "V" }
+        ]
+      },
+      {
+        "id": 30, "paragraph": 7,
+        "en": "How do different cultures think about loneliness, work stress, gender, and money?",
+        "ja": "文化によって、孤独、仕事のストレス、ジェンダー、お金についてどう考えるのか。",
+        "pattern": "SV", "pattern_note": "疑問文",
+        "structure": [
+          { "text": "How", "role": "M" },
+          { "text": "do", "role": "V" },
+          { "text": "different cultures", "role": "S" },
+          { "text": "think", "role": "V" },
+          { "text": "about loneliness, work stress, gender, and money?", "role": "M" }
+        ],
+        "ja_structure": [
+          { "text": "文化によって、", "role": "M" },
+          { "text": "孤独、仕事のストレス、ジェンダー、お金について", "role": "M" },
+          { "text": "どう考えるのか。", "role": "V" }
+        ]
+      },
+      {
+        "id": 31, "paragraph": 8,
+        "en": "By asking these questions, we can understand both Japan and America more deeply.",
+        "ja": "こうした問いを持つことで、私たちは日本とアメリカの両方をより深く理解できます。",
+        "pattern": "SVO",
+        "structure": [
+          { "text": "By asking these questions,", "role": "M" },
+          { "text": "we", "role": "S" },
+          { "text": "can understand", "role": "V" },
+          { "text": "both Japan and America", "role": "O" },
+          { "text": "more deeply.", "role": "M" }
+        ],
+        "ja_structure": [
+          { "text": "こうした問いを持つことで、", "role": "M" },
+          { "text": "私たちは", "role": "S" },
+          { "text": "日本とアメリカの両方を", "role": "O" },
+          { "text": "より深く", "role": "M" },
+          { "text": "理解できます。", "role": "V" }
+        ]
+      }
+    ]
+  },
+  "vocabulary": [
+    { "word": "nightlife", "meaning": "夜の娯楽、ナイトライフ" },
+    { "word": "business", "meaning": "商売、事業" },
+    { "word": "hostess club", "meaning": "キャバクラ、ホステスクラブ" },
+    { "word": "adult entertainment", "meaning": "成人向け娯楽、性風俗を含む表現" },
+    { "word": "separate", "meaning": "分ける" },
+    { "word": "dating", "meaning": "デート、恋愛関係" },
+    { "word": "uncomfortable", "meaning": "不快な、落ち着かない" },
+    { "word": "gender equality", "meaning": "男女平等" },
+    { "word": "relationship", "meaning": "人間関係、恋愛関係" },
+    { "word": "relaxation", "meaning": "リラックス" },
+    { "word": "client", "meaning": "顧客、取引先" },
+    { "word": "coworker", "meaning": "同僚" },
+    { "word": "attraction", "meaning": "魅力" },
+    { "word": "atmosphere", "meaning": "雰囲気" },
+    { "word": "emotional attention", "meaning": "感情的な関心、気遣い" },
+    { "word": "reaction", "meaning": "反応" },
+    { "word": "exploitation", "meaning": "搾取" },
+    { "word": "liberal", "meaning": "自由主義的な、寛容な" },
+    { "word": "force", "meaning": "強制する" },
+    { "word": "judge", "meaning": "判断する、批判する" },
+    { "word": "value", "meaning": "価値観" },
+    { "word": "loneliness", "meaning": "孤独" },
+    { "word": "work stress", "meaning": "仕事のストレス" }
+  ],
+  "grammar_points": [
+    {
+      "id": 1,
+      "title": "may + 動詞の原形",
+      "explanation": "「〜かもしれない」という意味。断定を避けるため、文化や意見について話すときに may / might / some people を使うと丁寧になる。",
+      "example_en": "Some Americans may see them as a sign of gender inequality.",
+      "example_ja": "一部のアメリカ人は、それらを男女不平等の表れと見るかもしれません。"
+    },
+    {
+      "id": 2,
+      "title": "as long as",
+      "explanation": "「〜である限り」という条件を表す表現。",
+      "example_en": "Adults should be free to choose their work, as long as they are safe and not forced.",
+      "example_ja": "安全で強制されていない限り、大人は自分の仕事を選ぶ自由があるべきです。"
+    },
+    {
+      "id": 3,
+      "title": "not only A but also B",
+      "explanation": "「AだけでなくBも」という意味。高校英語でよく出る重要表現。",
+      "example_en": "The service is not only about beauty or attraction. It is also about listening and talking.",
+      "example_ja": "そのサービスは美しさや魅力だけではありません。聞くことや話すことでもあります。"
+    },
+    {
+      "id": 4,
+      "title": "should not 〜",
+      "explanation": "「〜すべきではない」という意味。意見やアドバイスを述べるときに使う。",
+      "example_en": "We should not say, \"Japan is strange.\"",
+      "example_ja": "「日本は変だ」と言うべきではありません。"
+    }
+  ],
+  "comprehension_questions": [
+    {
+      "id": 1,
+      "question": "Why may Japanese hostess clubs be difficult for some Americans to understand?",
+      "choices": {
+        "A": "Because American culture often separates dating, friendship, and business more clearly.",
+        "B": "Because Americans do not like talking.",
+        "C": "Because Japan has no nightlife.",
+        "D": "Because hostess clubs are the same as restaurants."
+      },
+      "answer": "A"
+    },
+    {
+      "id": 2,
+      "question": "In Japan, what are hostess clubs sometimes used for?",
+      "choices": {
+        "A": "Studying English",
+        "B": "Business entertainment and communication",
+        "C": "Sports training",
+        "D": "School events"
+      },
+      "answer": "B"
+    },
+    {
+      "id": 3,
+      "question": "Why do some Americans worry about adult entertainment businesses?",
+      "choices": {
+        "A": "They think the music is too loud.",
+        "B": "They think the food is too expensive.",
+        "C": "They worry about gender inequality or exploitation.",
+        "D": "They want more clubs in America."
+      },
+      "answer": "C"
+    },
+    {
+      "id": 4,
+      "question": "What is the main message of the text?",
+      "choices": {
+        "A": "America is always correct.",
+        "B": "Japan is strange.",
+        "C": "People should judge other cultures quickly.",
+        "D": "We should understand cultures carefully through better questions."
+      },
+      "answer": "D"
+    }
+  ],
+  "discussion_questions": [
+    "Why do people sometimes pay for conversation or emotional attention?",
+    "Is it always wrong to pay for a service related to communication or comfort?",
+    "What cultural differences exist between Japan and America in dating or business?",
+    "How can we study sensitive topics without judging too quickly?",
+    "What problems should society be careful about in nightlife businesses?"
+  ]
+}

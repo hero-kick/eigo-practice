@@ -1,0 +1,520 @@
+const LESSON_URL = "../materials/lesson-01/lesson.json";
+
+const $ = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+const State = {
+  lesson: null,
+  activeTab: "passage",
+  passageCardIndex: 0,
+  jaRevealed: false,
+  structureRevealed: false,
+};
+
+async function loadLesson() {
+  const res = await fetch(LESSON_URL);
+  if (!res.ok) throw new Error(`Failed to load lesson: ${res.status}`);
+  return res.json();
+}
+
+/* ========================================================================
+   Passage
+   ======================================================================== */
+function renderPassage(lesson) {
+  renderPassageCard();
+  renderProseView(lesson);
+  setupCardInteraction();
+  applyJaReveal();
+  applyStructureReveal();
+}
+
+function passageContainers() {
+  return [$("#passage-stage")];
+}
+function setPassageClass(name, on) {
+  passageContainers().forEach((c) => c.classList.toggle(name, on));
+}
+
+function renderPassageCard() {
+  if (!State.lesson) return;
+  const sentences = State.lesson.passage.sentences;
+  const idx = State.passageCardIndex;
+  const s = sentences[idx];
+
+  const card = $("#passage-card");
+  card.classList.add("transitioning");
+
+  requestAnimationFrame(() => {
+    $("#card-num").textContent = circled(s.id);
+    renderSegments($("#card-en"), s.structure, s.en, " ");
+    renderSegments($("#card-ja"), s.ja_structure, s.ja, "");
+
+    const patternEl = $("#card-pattern");
+    patternEl.innerHTML = "";
+    if (s.pattern) {
+      patternEl.appendChild(document.createTextNode(s.pattern));
+      if (s.pattern_note) {
+        const note = document.createElement("span");
+        note.className = "pattern-note";
+        note.textContent = s.pattern_note;
+        patternEl.appendChild(note);
+      }
+    }
+
+    $("#card-progress-num").textContent = `${idx + 1} / ${sentences.length}`;
+    $("#card-progress-fill").style.width = `${((idx + 1) / sentences.length) * 100}%`;
+    $("#card-prev").disabled = idx === 0;
+    $("#card-next").disabled = idx === sentences.length - 1;
+
+    requestAnimationFrame(() => card.classList.remove("transitioning"));
+  });
+}
+
+function renderSegments(el, structure, fallback, sep) {
+  el.innerHTML = "";
+  if (Array.isArray(structure) && structure.length > 0) {
+    structure.forEach((seg, i) => {
+      const span = document.createElement("span");
+      span.className = `seg seg-${seg.role}`;
+      span.textContent = seg.text;
+      el.appendChild(span);
+      if (sep && i < structure.length - 1) el.appendChild(document.createTextNode(sep));
+    });
+  } else {
+    el.textContent = fallback;
+  }
+}
+
+function navigateCard(delta) {
+  if (!State.lesson) return;
+  const total = State.lesson.passage.sentences.length;
+  const next = Math.max(0, Math.min(total - 1, State.passageCardIndex + delta));
+  if (next !== State.passageCardIndex) {
+    State.passageCardIndex = next;
+    // Reset answer reveal on each new card
+    State.jaRevealed = false;
+    State.structureRevealed = false;
+    applyJaReveal();
+    applyStructureReveal();
+    renderPassageCard();
+  }
+}
+
+function setupCardInteraction() {
+  $("#card-prev").addEventListener("click", (e) => {
+    e.stopPropagation();
+    navigateCard(-1);
+  });
+  $("#card-next").addEventListener("click", (e) => {
+    e.stopPropagation();
+    navigateCard(1);
+  });
+  $("#passage-card").addEventListener("click", (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    if (x < rect.width / 2) navigateCard(-1);
+    else navigateCard(1);
+  });
+  $("#reveal-ja").addEventListener("click", (e) => {
+    e.stopPropagation();
+    State.jaRevealed = !State.jaRevealed;
+    applyJaReveal();
+  });
+  $("#reveal-structure").addEventListener("click", (e) => {
+    e.stopPropagation();
+    State.structureRevealed = !State.structureRevealed;
+    applyStructureReveal();
+  });
+}
+
+function applyJaReveal() {
+  setPassageClass("ja-revealed", State.jaRevealed);
+  const btn = $("#reveal-ja");
+  btn.classList.toggle("revealed", State.jaRevealed);
+  btn.setAttribute("aria-pressed", String(State.jaRevealed));
+  $(".reveal-label", btn).textContent = State.jaRevealed ? "和訳を隠す" : "和訳を見る";
+}
+
+function applyStructureReveal() {
+  const on = State.structureRevealed;
+  setPassageClass("show-structure", on);
+  setPassageClass("with-color", on);
+  setPassageClass("with-brackets", on);
+  const legend = $(".legend");
+  if (legend) {
+    legend.classList.toggle("visible", on);
+    legend.classList.toggle("with-brackets", on);
+  }
+  const btn = $("#reveal-structure");
+  btn.classList.toggle("revealed", on);
+  btn.setAttribute("aria-pressed", String(on));
+  $(".reveal-label", btn).textContent = on ? "文型を隠す" : "文型を見る";
+}
+
+function renderProseView(lesson) {
+  const root = $("#passage-prose");
+  root.innerHTML = "";
+
+  const book = document.createElement("div");
+  book.className = "prose-book";
+
+  const title = document.createElement("h2");
+  title.className = "prose-title";
+  title.textContent = lesson.title;
+
+  const meta = document.createElement("div");
+  meta.className = "prose-meta";
+  const lessonNum = lesson.id.replace(/^lesson-/, "");
+  meta.textContent = [`Lesson ${lessonNum}`, lesson.level].filter(Boolean).join(" · ");
+
+  const divider = document.createElement("hr");
+  divider.className = "prose-divider";
+
+  const bodyEn = document.createElement("div");
+  bodyEn.className = "prose-body-en";
+  lesson.passage.english.split("\n\n").forEach((para) => {
+    const p = document.createElement("p");
+    p.textContent = para.trim();
+    bodyEn.appendChild(p);
+  });
+
+  const sectionLabel = document.createElement("div");
+  sectionLabel.className = "prose-section-label";
+  sectionLabel.textContent = "日本語訳";
+
+  const bodyJa = document.createElement("div");
+  bodyJa.className = "prose-body-ja";
+  lesson.passage.japanese.split("\n\n").forEach((para) => {
+    const p = document.createElement("p");
+    p.textContent = para.trim();
+    bodyJa.appendChild(p);
+  });
+
+  book.append(title, meta, divider, bodyEn, sectionLabel, bodyJa);
+  root.appendChild(book);
+}
+
+function circled(n) {
+  if (n >= 1 && n <= 20) return String.fromCodePoint(0x2460 + n - 1);
+  if (n >= 21 && n <= 35) return String.fromCodePoint(0x3251 + n - 21);
+  if (n >= 36 && n <= 50) return String.fromCodePoint(0x32B1 + n - 36);
+  return String(n);
+}
+
+
+/* ========================================================================
+   Vocab
+   ======================================================================== */
+let vocabOriginalOrder = null;
+
+function renderVocab(lesson) {
+  const root = $("#vocab-list");
+  root.innerHTML = "";
+  vocabOriginalOrder = [...lesson.vocabulary];
+  drawVocab(vocabOriginalOrder);
+
+  $("#vocab-counter").textContent = `${lesson.vocabulary.length} 語`;
+
+  bindToggle($("#toggle-meaning"), (on) => {
+    root.classList.toggle("hide-meaning", !on);
+    if (on) $$(".vocab-card.flipped", root).forEach((el) => el.classList.remove("flipped"));
+  });
+
+  $("#vocab-shuffle").addEventListener("click", () => {
+    const shuffled = [...lesson.vocabulary].sort(() => Math.random() - 0.5);
+    drawVocab(shuffled);
+  });
+  $("#vocab-reset").addEventListener("click", () => {
+    drawVocab(vocabOriginalOrder);
+  });
+}
+
+function drawVocab(items) {
+  const root = $("#vocab-list");
+  root.innerHTML = "";
+  for (const v of items) {
+    const card = document.createElement("div");
+    card.className = "vocab-card";
+    card.innerHTML = `
+      <span class="word">${escapeHtml(v.word)}</span>
+      <span class="meaning">${escapeHtml(v.meaning)}</span>
+    `;
+    card.addEventListener("click", () => {
+      if (root.classList.contains("hide-meaning")) {
+        card.classList.toggle("flipped");
+      }
+    });
+    root.appendChild(card);
+  }
+}
+
+/* ========================================================================
+   Grammar
+   ======================================================================== */
+function renderGrammar(lesson) {
+  const root = $("#grammar-list");
+  root.innerHTML = "";
+  for (const g of lesson.grammar_points) {
+    const card = document.createElement("div");
+    card.className = "grammar-card";
+    card.innerHTML = `
+      <div class="gh">
+        <div class="gh-num">${g.id}</div>
+        <div class="gh-title">${escapeHtml(g.title)}</div>
+      </div>
+      <p class="desc">${escapeHtml(g.explanation)}</p>
+      <div class="ex">
+        <p class="ex-en">${escapeHtml(g.example_en)}</p>
+        <p class="ex-ja">${escapeHtml(g.example_ja)}</p>
+      </div>
+    `;
+    root.appendChild(card);
+  }
+  $("#grammar-counter").textContent = `${lesson.grammar_points.length} 項目`;
+}
+
+/* ========================================================================
+   Quiz
+   ======================================================================== */
+function renderQuiz(lesson) {
+  const root = $("#quiz-list");
+  root.innerHTML = "";
+  const total = lesson.comprehension_questions.length;
+  const state = new Map();
+
+  const updateScore = () => {
+    const solved = [...state.values()].filter((v) => v === "correct").length;
+    const scoreEl = $("#quiz-score");
+    scoreEl.textContent = `${solved} / ${total}`;
+    scoreEl.classList.toggle("has-progress", solved > 0);
+  };
+
+  for (const q of lesson.comprehension_questions) {
+    const card = document.createElement("div");
+    card.className = "quiz-card";
+
+    const qh = document.createElement("div");
+    qh.className = "qh";
+    qh.innerHTML = `
+      <div class="q-num">Q${q.id}</div>
+      <div class="q-text">${escapeHtml(q.question)}</div>
+    `;
+
+    const choices = document.createElement("div");
+    choices.className = "quiz-choices";
+    const buttons = [];
+
+    for (const [key, text] of Object.entries(q.choices)) {
+      const btn = document.createElement("button");
+      btn.className = "choice";
+      btn.dataset.key = key;
+      btn.textContent = text;
+      btn.addEventListener("click", () => {
+        if (btn.disabled) return;
+        if (key === q.answer) {
+          btn.classList.add("correct");
+          card.classList.remove("solved-wrong");
+          card.classList.add("solved-correct");
+          state.set(q.id, "correct");
+          buttons.forEach((b) => (b.disabled = true));
+        } else {
+          btn.classList.add("wrong");
+          card.classList.add("solved-wrong");
+          state.set(q.id, "wrong");
+        }
+        updateScore();
+      });
+      buttons.push(btn);
+      choices.appendChild(btn);
+    }
+
+    const actions = document.createElement("div");
+    actions.className = "quiz-actions";
+    const reveal = document.createElement("button");
+    reveal.className = "btn-link";
+    reveal.textContent = "答えを表示";
+    reveal.addEventListener("click", () => {
+      buttons.forEach((b) => {
+        if (b.dataset.key === q.answer) b.classList.add("reveal");
+      });
+    });
+    const reset = document.createElement("button");
+    reset.className = "btn-link";
+    reset.textContent = "リセット";
+    reset.addEventListener("click", () => {
+      buttons.forEach((b) => {
+        b.classList.remove("correct", "wrong", "reveal");
+        b.disabled = false;
+      });
+      card.classList.remove("solved-correct", "solved-wrong");
+      state.delete(q.id);
+      updateScore();
+    });
+    actions.append(reveal, reset);
+
+    card.append(qh, choices, actions);
+    root.appendChild(card);
+  }
+
+  $("#quiz-reset-all").addEventListener("click", () => {
+    $$(".quiz-card", root).forEach((card) => {
+      card.classList.remove("solved-correct", "solved-wrong");
+      $$(".choice", card).forEach((b) => {
+        b.classList.remove("correct", "wrong", "reveal");
+        b.disabled = false;
+      });
+    });
+    state.clear();
+    updateScore();
+  });
+
+  updateScore();
+}
+
+/* ========================================================================
+   Discussion
+   ======================================================================== */
+function renderDiscussion(lesson) {
+  const ol = $("#discussion-list");
+  ol.innerHTML = "";
+  for (const d of lesson.discussion_questions) {
+    const li = document.createElement("li");
+    li.textContent = d;
+    ol.appendChild(li);
+  }
+}
+
+/* ========================================================================
+   Tab nav
+   ======================================================================== */
+function setupTabs() {
+  const tabs = $$(".tab");
+  const panels = $$(".panel");
+  const activate = (name) => {
+    State.activeTab = name;
+    tabs.forEach((t) => {
+      const on = t.dataset.tab === name;
+      t.classList.toggle("active", on);
+      t.setAttribute("aria-selected", String(on));
+    });
+    panels.forEach((p) => p.classList.toggle("active", p.dataset.panel === name));
+  };
+  tabs.forEach((t) => t.addEventListener("click", () => activate(t.dataset.tab)));
+  activate("passage");
+}
+
+/* ========================================================================
+   Help overlay
+   ======================================================================== */
+function setupHelp() {
+  const overlay = $("#help-overlay");
+  const open = () => overlay.classList.remove("hidden");
+  const close = () => overlay.classList.add("hidden");
+  $("#help-btn").addEventListener("click", open);
+  $("#help-close").addEventListener("click", close);
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) close();
+  });
+  return { open, close, isOpen: () => !overlay.classList.contains("hidden") };
+}
+
+/* ========================================================================
+   Keyboard shortcuts
+   ======================================================================== */
+function setupKeyboard(help) {
+  const tabKeys = { "1": "passage", "2": "prose", "3": "vocab", "4": "grammar", "5": "quiz", "6": "discussion" };
+
+  document.addEventListener("keydown", (e) => {
+    if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+    if (help.isOpen()) {
+      if (e.key === "Escape") { help.close(); e.preventDefault(); }
+      return;
+    }
+
+    if (e.key === "?" || (e.key === "/" && e.shiftKey)) { help.open(); e.preventDefault(); return; }
+
+    if (tabKeys[e.key]) {
+      const tab = $(`.tab[data-tab="${tabKeys[e.key]}"]`);
+      if (tab) { tab.click(); e.preventDefault(); }
+      return;
+    }
+
+    if (State.activeTab === "passage") {
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") { navigateCard(1); e.preventDefault(); return; }
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") { navigateCard(-1); e.preventDefault(); return; }
+      if (e.key === "h" || e.key === "H") { $("#reveal-ja").click(); e.preventDefault(); return; }
+      if (e.key === "s" || e.key === "S") { $("#reveal-structure").click(); e.preventDefault(); return; }
+    }
+  });
+}
+
+/* ========================================================================
+   Utils
+   ======================================================================== */
+function bindToggle(btn, onChange) {
+  btn.addEventListener("click", () => {
+    const next = !btn.classList.contains("active");
+    btn.classList.toggle("active", next);
+    btn.setAttribute("aria-pressed", String(next));
+    onChange(next);
+  });
+}
+function bindLinkedToggle(btns, onChange) {
+  if (!btns.length) return;
+  btns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const next = !btn.classList.contains("active");
+      btns.forEach((b) => {
+        b.classList.toggle("active", next);
+        b.setAttribute("aria-pressed", String(next));
+      });
+      onChange(next);
+    });
+  });
+}
+
+function escapeHtml(s) {
+  return String(s)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+/* ========================================================================
+   Init
+   ======================================================================== */
+(async function init() {
+  try {
+    const lesson = await loadLesson();
+    State.lesson = lesson;
+    $("#brand-sub").textContent = `${lesson.id.toUpperCase()} · ${lesson.level || ""}`;
+    document.title = `${lesson.title} · EigoPracitice`;
+    renderPassage(lesson);
+    renderVocab(lesson);
+    renderGrammar(lesson);
+    renderQuiz(lesson);
+    renderDiscussion(lesson);
+    setupTabs();
+    const help = setupHelp();
+    setupKeyboard(help);
+
+    $("#loading").classList.add("hidden");
+    setTimeout(() => $("#loading").remove(), 300);
+  } catch (err) {
+    console.error(err);
+    $("#loading").innerHTML = `
+      <div style="max-width:480px; padding:24px; text-align:center;">
+        <div style="font-size:15px; font-weight:600; color:#dc2626; margin-bottom:8px;">教材データの読み込みに失敗しました</div>
+        <div style="font-size:13px; color:#475569; line-height:1.6;">
+          HTTP サーバ経由で開いていますか?<br>
+          <code style="background:#f1f5f9; padding:2px 6px; border-radius:4px;">python -m http.server 8000</code><br>
+          → <code style="background:#f1f5f9; padding:2px 6px; border-radius:4px;">http://localhost:8000/web/</code>
+        </div>
+      </div>
+    `;
+  }
+})();

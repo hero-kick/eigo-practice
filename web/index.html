@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>EigoPracitice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+JP:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="styles.css?v=10" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-row">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M5 4.5A2.5 2.5 0 017.5 2H19a1 1 0 011 1v16.5a1 1 0 01-1 1H7.5A2.5 2.5 0 015 18V4.5zm2 13.5a.5.5 0 00.5.5H18v-2H7.5a.5.5 0 00-.5.5v1zm0-3.5h11V4H7.5a.5.5 0 00-.5.5V14.5z"/></svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-name">EigoPracitice</div>
+          <div class="brand-sub" id="brand-sub">Loading…</div>
+        </div>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="tab" data-tab="passage" role="tab">
+        <svg class="tab-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M4 4a2 2 0 012-2h9l5 5v15a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm10 1v4h4l-4-4zM7 13h10v2H7v-2zm0 4h7v2H7v-2z"/></svg>
+        <span>本文</span>
+        <kbd class="tab-key">1</kbd>
+      </button>
+      <button class="tab" data-tab="prose" role="tab">
+        <svg class="tab-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M3 5h18v2H3V5zm0 4h18v2H3V9zm0 4h12v2H3v-2zm0 4h18v2H3v-2z"/></svg>
+        <span>全文</span>
+        <kbd class="tab-key">2</kbd>
+      </button>
+      <button class="tab" data-tab="vocab" role="tab">
+        <svg class="tab-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M3 5a2 2 0 012-2h6.586a1 1 0 01.707.293l8.414 8.414a2 2 0 010 2.828l-6.586 6.586a2 2 0 01-2.828 0L2.293 12.293A1 1 0 012 11.586V5zm4 4a2 2 0 100-4 2 2 0 000 4z"/></svg>
+        <span>単語</span>
+        <kbd class="tab-key">3</kbd>
+      </button>
+      <button class="tab" data-tab="grammar" role="tab">
+        <svg class="tab-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06zM17.66 3a1 1 0 01.71.29l2.34 2.34a1 1 0 010 1.41l-1.83 1.83-3.75-3.75 1.83-1.83a1 1 0 01.7-.29zM3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/></svg>
+        <span>文法</span>
+        <kbd class="tab-key">4</kbd>
+      </button>
+      <button class="tab" data-tab="quiz" role="tab">
+        <svg class="tab-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 100 20 10 10 0 000-20zm.75 15.5h-1.5v-1.5h1.5v1.5zm1.59-5.97l-.68.69c-.54.55-.91 1.05-.91 2.28h-1.5v-.38c0-.9.37-1.7.91-2.25l.92-.94c.28-.27.43-.65.43-1.07a1.5 1.5 0 00-3 0H8.5a3 3 0 016 0c0 .67-.27 1.27-.66 1.67z"/></svg>
+        <span>問題</span>
+        <kbd class="tab-key">5</kbd>
+      </button>
+      <button class="tab" data-tab="discussion" role="tab">
+        <svg class="tab-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M4 4h16a2 2 0 012 2v10a2 2 0 01-2 2h-4l-4 4-4-4H4a2 2 0 01-2-2V6a2 2 0 012-2zm3 5v2h10V9H7zm0 4v2h7v-2H7z"/></svg>
+        <span>議論</span>
+        <kbd class="tab-key">6</kbd>
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="footer-btn" id="help-btn" title="ヘルプ ( ? )" aria-label="ヘルプを表示">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 100 20 10 10 0 000-20zm.75 15.5h-1.5v-1.5h1.5v1.5zm1.59-5.97l-.68.69c-.54.55-.91 1.05-.91 2.28h-1.5v-.38c0-.9.37-1.7.91-2.25l.92-.94c.28-.27.43-.65.43-1.07a1.5 1.5 0 00-3 0H8.5a3 3 0 016 0c0 .67-.27 1.27-.66 1.67z"/></svg>
+        <span>ヘルプ</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="content">
+    <!-- Passage (one sentence at a time, flashcard with reveal-on-demand) -->
+    <section class="panel" data-panel="passage">
+      <header class="panel-header">
+        <h1 class="panel-title">本文</h1>
+      </header>
+      <div class="legend">
+        <span class="legend-item legend-S"><span class="legend-dot"></span>S 主語</span>
+        <span class="legend-item legend-V"><span class="legend-dot"></span>V 動詞</span>
+        <span class="legend-item legend-O"><span class="legend-dot"></span>O 目的語</span>
+        <span class="legend-item legend-C"><span class="legend-dot"></span>C 補語</span>
+        <span class="legend-item legend-M"><span class="legend-dot"></span>M 修飾語</span>
+        <span class="legend-hint">タップ / ← → で前後移動</span>
+      </div>
+      <div class="passage passage-stage" id="passage-stage">
+        <button class="card-nav card-nav-prev" id="card-prev" type="button" aria-label="前の文">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+        <div class="passage-card" id="passage-card">
+          <div class="card-num" id="card-num"></div>
+          <div class="card-en" id="card-en"></div>
+          <div class="card-ja" id="card-ja"></div>
+          <div class="card-pattern" id="card-pattern"></div>
+        </div>
+        <button class="card-nav card-nav-next" id="card-next" type="button" aria-label="次の文">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+        </button>
+        <div class="card-actions">
+          <button class="reveal-btn" id="reveal-ja" type="button" aria-pressed="false" title="和訳を見る ( H )">
+            <span class="reveal-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17a5 5 0 110-10 5 5 0 010 10zm0-8a3 3 0 100 6 3 3 0 000-6z"/></svg>
+            </span>
+            <span class="reveal-label">和訳を見る</span>
+          </button>
+          <button class="reveal-btn" id="reveal-structure" type="button" aria-pressed="false" title="文型を見る ( S )">
+            <span class="reveal-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zm0-10v2h14V7H7z"/></svg>
+            </span>
+            <span class="reveal-label">文型を見る</span>
+          </button>
+        </div>
+        <div class="card-progress">
+          <span class="card-progress-num" id="card-progress-num"></span>
+          <div class="card-progress-bar"><div class="card-progress-fill" id="card-progress-fill"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Prose (book-style continuous reading) -->
+    <section class="panel" data-panel="prose">
+      <header class="panel-header">
+        <h1 class="panel-title">全文</h1>
+      </header>
+      <div class="passage-prose" id="passage-prose"></div>
+    </section>
+
+    <!-- Vocab -->
+    <section class="panel" data-panel="vocab">
+      <header class="panel-header">
+        <h1 class="panel-title">単語</h1>
+        <div class="panel-controls">
+          <button class="toggle-btn active" id="toggle-meaning" type="button" aria-pressed="true" title="意味の表示切替">意味</button>
+          <button class="btn btn-ghost" id="vocab-shuffle" title="シャッフル">
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M14.83 13.41L13.42 14.82L18.59 20l-2.09 2H22v-5.5L19.99 18.58zM14.83 10.59L20 5.41l2 2V2h-5.5l2.09 2.09L13.41 9.17zM6 5h2.59l4.83 4.83L14.83 8.4L9.41 3H2v6h6V8H6V5zM2 19h6v-1H6v-3l4.83-4.83L9.42 9.42L2 16.83V19z"/></svg>
+            シャッフル
+          </button>
+          <button class="btn btn-ghost" id="vocab-reset" title="並び順を戻す">元に戻す</button>
+          <span class="counter" id="vocab-counter"></span>
+        </div>
+      </header>
+      <div class="vocab-grid" id="vocab-list"></div>
+    </section>
+
+    <!-- Grammar -->
+    <section class="panel" data-panel="grammar">
+      <header class="panel-header">
+        <h1 class="panel-title">文法</h1>
+        <div class="panel-controls">
+          <span class="counter" id="grammar-counter"></span>
+        </div>
+      </header>
+      <div class="grammar-list" id="grammar-list"></div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="panel" data-panel="quiz">
+      <header class="panel-header">
+        <h1 class="panel-title">問題</h1>
+        <div class="panel-controls">
+          <span class="score" id="quiz-score">0 / 0</span>
+          <button class="btn btn-ghost" id="quiz-reset-all">全リセット</button>
+        </div>
+      </header>
+      <div class="quiz-list" id="quiz-list"></div>
+    </section>
+
+    <!-- Discussion -->
+    <section class="panel" data-panel="discussion">
+      <header class="panel-header">
+        <h1 class="panel-title">議論</h1>
+      </header>
+      <ol class="discussion-list" id="discussion-list"></ol>
+    </section>
+  </main>
+
+  <!-- Help overlay -->
+  <div class="help-overlay hidden" id="help-overlay" role="dialog" aria-modal="true" aria-labelledby="help-title">
+    <div class="help-card">
+      <div class="help-head">
+        <h2 id="help-title">キーボードショートカット</h2>
+        <button class="icon-btn" id="help-close" aria-label="閉じる">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M6.225 4.811L4.811 6.225 10.586 12l-5.775 5.775 1.414 1.414L12 13.414l5.775 5.775 1.414-1.414L13.414 12l5.775-5.775-1.414-1.414L12 10.586z"/></svg>
+        </button>
+      </div>
+      <dl class="help-keys">
+        <dt><kbd>1</kbd>〜<kbd>6</kbd></dt><dd>タブ切替(本文 / 全文 / 単語 / 文法 / 問題 / 議論)</dd>
+        <dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>前 / 次の文へ(本文タブ)</dd>
+        <dt><kbd>Esc</kbd></dt><dd>ヘルプを閉じる</dd>
+        <dt><kbd>H</kbd></dt><dd>和訳を見る / 隠す</dd>
+        <dt><kbd>S</kbd></dt><dd>文型(SVOC)を見る / 隠す</dd>
+        <dt><kbd>?</kbd></dt><dd>このヘルプを表示</dd>
+      </dl>
+      <div class="help-foot">本文カードでは、和訳・文型は最初は隠れています。「答え合わせ」感覚でボタンを押して確認し、次の文に進むと自動でリセットされます。</div>
+    </div>
+  </div>
+
+  <div class="loading" id="loading">
+    <div class="spinner" aria-hidden="true"></div>
+    <div class="loading-text">教材を読み込んでいます…</div>
+  </div>
+
+  <script src="app.js?v=10"></script>
+</body>
+</html>
