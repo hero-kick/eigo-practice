@@ -10,7 +10,6 @@ const State = {
   passageCardIndex: 0,
   jaRevealed: false,
   structureRevealed: false,
-  exerciseMode: false,
 };
 
 /* ========================================================================
@@ -37,33 +36,22 @@ function renderPassageCard() {
   const s = sentences[idx];
 
   const card = $("#passage-card");
-  const inExercise = State.exerciseMode;
-
-  card.classList.toggle("exercise-mode", inExercise);
-  $("#card-actions-normal").hidden = inExercise;
-  $("#card-actions-exercise").hidden = !inExercise;
-
   card.classList.add("transitioning");
 
   requestAnimationFrame(() => {
     $("#card-num").textContent = circled(s.id);
+    renderSegments($("#card-en"), s.structure, s.en, " ", { jotTarget: true });
+    renderSegments($("#card-ja"), s.ja_structure, s.ja, "");
 
-    if (inExercise) {
-      renderCardExercise(s);
-    } else {
-      renderSegments($("#card-en"), s.structure, s.en, " ");
-      renderSegments($("#card-ja"), s.ja_structure, s.ja, "");
-
-      const patternEl = $("#card-pattern");
-      patternEl.innerHTML = "";
-      if (s.pattern) {
-        patternEl.appendChild(document.createTextNode(s.pattern));
-        if (s.pattern_note) {
-          const note = document.createElement("span");
-          note.className = "pattern-note";
-          note.textContent = s.pattern_note;
-          patternEl.appendChild(note);
-        }
+    const patternEl = $("#card-pattern");
+    patternEl.innerHTML = "";
+    if (s.pattern) {
+      patternEl.appendChild(document.createTextNode(s.pattern));
+      if (s.pattern_note) {
+        const note = document.createElement("span");
+        note.className = "pattern-note";
+        note.textContent = s.pattern_note;
+        patternEl.appendChild(note);
       }
     }
 
@@ -76,123 +64,37 @@ function renderPassageCard() {
   });
 }
 
-/* ----- Structure exercise ----- */
-const ROLE_CYCLE = ["?", "S", "V", "O", "C", "M"];
-
-function renderCardExercise(s) {
-  const enEl = $("#card-en");
-  enEl.innerHTML = "";
-
-  const instr = document.createElement("p");
-  instr.className = "exercise-instruction";
-  instr.textContent = "各語句をタップして S / V / O / C / M を割り当て、答え合わせで確認しましょう。";
-  enEl.appendChild(instr);
-
-  const chips = document.createElement("div");
-  chips.className = "exercise-chips";
-
-  for (const seg of s.structure || []) {
-    const chip = document.createElement("span");
-    chip.className = "exercise-chip";
-    chip.dataset.userRole = "?";
-    chip.dataset.correctRole = seg.role;
-
-    const text = document.createElement("span");
-    text.className = "exercise-chip-text";
-    text.textContent = seg.text;
-    chip.appendChild(text);
-
-    const label = document.createElement("span");
-    label.className = "exercise-chip-label";
-    label.textContent = "?";
-    chip.appendChild(label);
-
-    chip.addEventListener("click", (e) => {
-      e.stopPropagation();
-      cycleChipRole(chip);
-    });
-
-    chips.appendChild(chip);
-  }
-
-  enEl.appendChild(chips);
-  $("#exercise-score").textContent = "";
+/* ----- Tap-to-jot annotation ----- */
+const JOT_CYCLE = ["", "S", "V", "O", "C", "M"];
+function cycleJot(span) {
+  const cur = span.dataset.jot || "";
+  const i = JOT_CYCLE.indexOf(cur);
+  const next = JOT_CYCLE[(i + 1) % JOT_CYCLE.length];
+  span.dataset.jot = next;
+  const jotEl = span.querySelector(".jot");
+  if (jotEl) jotEl.textContent = next;
 }
 
-function cycleChipRole(chip) {
-  chip.classList.remove("judged", "correct", "wrong");
-  const hint = chip.querySelector(".exercise-correct-hint");
-  if (hint) hint.remove();
-
-  const cur = chip.dataset.userRole || "?";
-  const i = ROLE_CYCLE.indexOf(cur);
-  const next = ROLE_CYCLE[(i + 1) % ROLE_CYCLE.length];
-  chip.dataset.userRole = next;
-  chip.querySelector(".exercise-chip-label").textContent = next;
-  $("#exercise-score").textContent = "";
-}
-
-function checkExercise() {
-  const chips = $$(".exercise-chip");
-  let correct = 0;
-  let total = 0;
-  for (const chip of chips) {
-    const userRole = chip.dataset.userRole;
-    const correctRole = chip.dataset.correctRole;
-    // Skip expletive (there/it) — students rarely learn this label
-    if (correctRole === "expl") continue;
-    total++;
-    chip.classList.add("judged");
-    if (userRole === correctRole) {
-      chip.classList.add("correct");
-      chip.classList.remove("wrong");
-      correct++;
-    } else {
-      chip.classList.add("wrong");
-      chip.classList.remove("correct");
-      let hint = chip.querySelector(".exercise-correct-hint");
-      if (!hint) {
-        hint = document.createElement("span");
-        hint.className = "exercise-correct-hint";
-        chip.appendChild(hint);
-      }
-      hint.textContent = `正解: ${correctRole}`;
-    }
-  }
-  $("#exercise-score").textContent = total > 0 ? `${correct} / ${total} 正解` : "";
-}
-
-function resetExerciseChips() {
-  $$(".exercise-chip").forEach((chip) => {
-    chip.dataset.userRole = "?";
-    chip.querySelector(".exercise-chip-label").textContent = "?";
-    chip.classList.remove("judged", "correct", "wrong");
-    const hint = chip.querySelector(".exercise-correct-hint");
-    if (hint) hint.remove();
-  });
-  $("#exercise-score").textContent = "";
-}
-
-function enterExerciseMode() {
-  State.exerciseMode = true;
-  State.jaRevealed = false;
-  State.structureRevealed = false;
-  applyJaReveal();
-  applyStructureReveal();
-  renderPassageCard();
-}
-function exitExerciseMode() {
-  State.exerciseMode = false;
-  renderPassageCard();
-}
-
-function renderSegments(el, structure, fallback, sep) {
+function renderSegments(el, structure, fallback, sep, opts = {}) {
+  const { jotTarget = false } = opts;
   el.innerHTML = "";
   if (Array.isArray(structure) && structure.length > 0) {
     structure.forEach((seg, i) => {
       const span = document.createElement("span");
-      span.className = `seg seg-${seg.role}`;
-      span.textContent = seg.text;
+      span.className = `seg seg-${seg.role}${jotTarget ? " jot-target" : ""}`;
+      span.appendChild(document.createTextNode(seg.text));
+
+      if (jotTarget) {
+        span.dataset.jot = "";
+        const jotEl = document.createElement("span");
+        jotEl.className = "jot";
+        span.appendChild(jotEl);
+        span.addEventListener("click", (e) => {
+          e.stopPropagation();
+          cycleJot(span);
+        });
+      }
+
       el.appendChild(span);
       if (sep && i < structure.length - 1) el.appendChild(document.createTextNode(sep));
     });
@@ -207,10 +109,9 @@ function navigateCard(delta) {
   const next = Math.max(0, Math.min(total - 1, State.passageCardIndex + delta));
   if (next !== State.passageCardIndex) {
     State.passageCardIndex = next;
-    // Reset reveal/exercise on each new card
+    // Reset reveal on each new card (jots wiped via re-render)
     State.jaRevealed = false;
     State.structureRevealed = false;
-    State.exerciseMode = false;
     applyJaReveal();
     applyStructureReveal();
     renderPassageCard();
@@ -227,7 +128,6 @@ function setupCardInteraction() {
     navigateCard(1);
   });
   $("#passage-card").addEventListener("click", (e) => {
-    if (State.exerciseMode) return; // navigation disabled in exercise
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     if (x < rect.width / 2) navigateCard(-1);
@@ -242,22 +142,6 @@ function setupCardInteraction() {
     e.stopPropagation();
     State.structureRevealed = !State.structureRevealed;
     applyStructureReveal();
-  });
-  $("#enter-exercise").addEventListener("click", (e) => {
-    e.stopPropagation();
-    enterExerciseMode();
-  });
-  $("#exit-exercise").addEventListener("click", (e) => {
-    e.stopPropagation();
-    exitExerciseMode();
-  });
-  $("#exercise-check").addEventListener("click", (e) => {
-    e.stopPropagation();
-    checkExercise();
-  });
-  $("#exercise-reset").addEventListener("click", (e) => {
-    e.stopPropagation();
-    resetExerciseChips();
   });
 }
 
