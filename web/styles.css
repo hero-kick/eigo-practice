@@ -132,10 +132,26 @@ kbd {
 }
 
 .brand {
-  padding: 12px 14px 10px;
+  padding: 0;
   border-bottom: 1px solid var(--border);
 }
-.brand-row { display: flex; align-items: center; gap: 10px; }
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 14px 10px;
+  background: transparent;
+  border: 0;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color .12s;
+}
+.brand-back:hover { background: var(--surface-2); }
+.brand-back:active { background: var(--surface-3); }
 .brand-mark {
   width: 32px; height: 32px;
   border-radius: var(--radius);
@@ -622,7 +638,7 @@ kbd {
 }
 
 .prose-title {
-  margin: 0 0 6px;
+  margin: 0 0 4px;
   font-family: var(--font-serif);
   font-size: 24px;
   font-weight: 600;
@@ -630,6 +646,17 @@ kbd {
   letter-spacing: -0.005em;
   text-align: center;
   color: var(--text);
+}
+
+.prose-title-ja {
+  margin: 0 0 14px;
+  text-align: center;
+  font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  line-height: 1.55;
+  letter-spacing: 0.01em;
 }
 
 .prose-meta {
@@ -991,6 +1018,123 @@ kbd {
   display: grid; place-items: center;
   font-family: var(--font-sans);
   font-size: 12px; font-weight: 700;
+}
+
+/* ========================================================================
+   Lesson selector — initial screen
+   ======================================================================== */
+.lesson-selector {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, var(--bg) 0%, #eef0f5 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 80;
+  padding: 28px 20px;
+  overflow-y: auto;
+}
+.lesson-selector.hidden { display: none; }
+
+.selector-content {
+  width: 100%;
+  max-width: 540px;
+}
+
+.selector-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.selector-brand {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--accent), #7c3aed);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  margin: 0 auto 14px;
+  box-shadow: var(--shadow-md);
+}
+.selector-title {
+  margin: 0 0 6px;
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.selector-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.lesson-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lesson-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color .12s, box-shadow .12s, transform .08s;
+  box-shadow: var(--shadow-xs);
+}
+.lesson-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+}
+.lesson-card:active { transform: translateY(1px); }
+.lesson-card-num {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.lesson-card-title-en {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+}
+.lesson-card-title-ja {
+  font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-top: 4px;
+}
+.lesson-card-level {
+  font-size: 11px;
+  color: var(--text-faint);
+  margin-top: 8px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+@media (orientation: landscape) and (max-height: 380px) {
+  .lesson-selector { padding: 16px; }
+  .selector-header { margin-bottom: 16px; }
+  .selector-brand { width: 40px; height: 40px; margin-bottom: 8px; border-radius: 12px; }
+  .selector-title { font-size: 19px; }
+  .lesson-card { padding: 12px 16px; }
+  .lesson-card-title-en { font-size: 15px; }
 }
 
 /* ========================================================================

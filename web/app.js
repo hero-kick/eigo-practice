@@ -1,21 +1,16 @@
-const LESSON_URL = "../materials/lesson-01/lesson.json";
+const LESSONS_INDEX_URL = "../materials/lessons.json";
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
 const State = {
+  lessons: null,
   lesson: null,
-  activeTab: "passage",
+  activeTab: "prose",
   passageCardIndex: 0,
   jaRevealed: false,
   structureRevealed: false,
 };
-
-async function loadLesson() {
-  const res = await fetch(LESSON_URL);
-  if (!res.ok) throw new Error(`Failed to load lesson: ${res.status}`);
-  return res.json();
-}
 
 /* ========================================================================
    Passage
@@ -161,14 +156,24 @@ function renderProseView(lesson) {
   const title = document.createElement("h2");
   title.className = "prose-title";
   title.textContent = lesson.title;
+  book.appendChild(title);
+
+  if (lesson.title_ja) {
+    const titleJa = document.createElement("div");
+    titleJa.className = "prose-title-ja";
+    titleJa.textContent = lesson.title_ja;
+    book.appendChild(titleJa);
+  }
 
   const meta = document.createElement("div");
   meta.className = "prose-meta";
   const lessonNum = lesson.id.replace(/^lesson-/, "");
   meta.textContent = [`Lesson ${lessonNum}`, lesson.level].filter(Boolean).join(" · ");
+  book.appendChild(meta);
 
   const divider = document.createElement("hr");
   divider.className = "prose-divider";
+  book.appendChild(divider);
 
   const bodyEn = document.createElement("div");
   bodyEn.className = "prose-body-en";
@@ -177,10 +182,12 @@ function renderProseView(lesson) {
     p.textContent = para.trim();
     bodyEn.appendChild(p);
   });
+  book.appendChild(bodyEn);
 
   const sectionLabel = document.createElement("div");
   sectionLabel.className = "prose-section-label";
   sectionLabel.textContent = "日本語訳";
+  book.appendChild(sectionLabel);
 
   const bodyJa = document.createElement("div");
   bodyJa.className = "prose-body-ja";
@@ -189,8 +196,8 @@ function renderProseView(lesson) {
     p.textContent = para.trim();
     bodyJa.appendChild(p);
   });
+  book.appendChild(bodyJa);
 
-  book.append(title, meta, divider, bodyEn, sectionLabel, bodyJa);
   root.appendChild(book);
 }
 
@@ -388,19 +395,16 @@ function renderDiscussion(lesson) {
    Tab nav
    ======================================================================== */
 function setupTabs() {
-  const tabs = $$(".tab");
-  const panels = $$(".panel");
-  const activate = (name) => {
-    State.activeTab = name;
-    tabs.forEach((t) => {
-      const on = t.dataset.tab === name;
-      t.classList.toggle("active", on);
-      t.setAttribute("aria-selected", String(on));
-    });
-    panels.forEach((p) => p.classList.toggle("active", p.dataset.panel === name));
-  };
-  tabs.forEach((t) => t.addEventListener("click", () => activate(t.dataset.tab)));
-  activate("passage");
+  $$(".tab").forEach((t) => t.addEventListener("click", () => activateTab(t.dataset.tab)));
+}
+function activateTab(name) {
+  State.activeTab = name;
+  $$(".tab").forEach((t) => {
+    const on = t.dataset.tab === name;
+    t.classList.toggle("active", on);
+    t.setAttribute("aria-selected", String(on));
+  });
+  $$(".panel").forEach((p) => p.classList.toggle("active", p.dataset.panel === name));
 }
 
 /* ========================================================================
@@ -422,7 +426,8 @@ function setupHelp() {
    Keyboard shortcuts
    ======================================================================== */
 function setupKeyboard(help) {
-  const tabKeys = { "1": "passage", "2": "prose", "3": "vocab", "4": "grammar", "5": "quiz", "6": "discussion" };
+  const tabKeys = { "1": "prose", "2": "passage", "3": "vocab", "4": "grammar", "5": "quiz", "6": "discussion" };
+  const inSelector = () => !$("#lesson-selector").classList.contains("hidden");
 
   document.addEventListener("keydown", (e) => {
     if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
@@ -432,6 +437,8 @@ function setupKeyboard(help) {
       if (e.key === "Escape") { help.close(); e.preventDefault(); }
       return;
     }
+
+    if (inSelector()) return;
 
     if (e.key === "?" || (e.key === "/" && e.shiftKey)) { help.open(); e.preventDefault(); return; }
 
@@ -487,20 +494,110 @@ function escapeHtml(s) {
 /* ========================================================================
    Init
    ======================================================================== */
-(async function init() {
-  try {
-    const lesson = await loadLesson();
+/* ========================================================================
+   Lesson selector + routing
+   ======================================================================== */
+function renderLessonSelector(lessons) {
+  const root = $("#lesson-list");
+  root.innerHTML = "";
+  for (const l of lessons) {
+    const card = document.createElement("a");
+    card.className = "lesson-card";
+    card.href = `#/${l.id}`;
+
+    const num = document.createElement("div");
+    num.className = "lesson-card-num";
+    num.textContent = `Lesson ${l.id.replace(/^lesson-/, "")}`;
+    card.appendChild(num);
+
+    const en = document.createElement("div");
+    en.className = "lesson-card-title-en";
+    en.textContent = l.title;
+    card.appendChild(en);
+
+    if (l.title_ja) {
+      const ja = document.createElement("div");
+      ja.className = "lesson-card-title-ja";
+      ja.textContent = l.title_ja;
+      card.appendChild(ja);
+    }
+    if (l.level) {
+      const lev = document.createElement("div");
+      lev.className = "lesson-card-level";
+      lev.textContent = l.level;
+      card.appendChild(lev);
+    }
+
+    root.appendChild(card);
+  }
+}
+
+async function showLesson(lessonId) {
+  const info = (State.lessons || []).find((l) => l.id === lessonId);
+  if (!info) {
+    console.warn("Unknown lesson:", lessonId);
+    showSelector();
+    return;
+  }
+  if (!State.lesson || State.lesson.id !== lessonId) {
+    const lesson = await fetch(`../materials/${info.path}`).then((r) => {
+      if (!r.ok) throw new Error("lesson fetch failed");
+      return r.json();
+    });
     State.lesson = lesson;
-    $("#brand-sub").textContent = `${lesson.id.toUpperCase()} · ${lesson.level || ""}`;
-    document.title = `${lesson.title} · EigoPracitice`;
     renderPassage(lesson);
     renderVocab(lesson);
     renderGrammar(lesson);
     renderQuiz(lesson);
     renderDiscussion(lesson);
+    $("#brand-sub").textContent = `${lesson.id.toUpperCase()} · ${lesson.level || ""}`;
+    document.title = `${lesson.title} · EigoPracitice`;
+  }
+  // Reset card state on entry
+  State.passageCardIndex = 0;
+  State.jaRevealed = false;
+  State.structureRevealed = false;
+  applyJaReveal();
+  applyStructureReveal();
+  renderPassageCard();
+  activateTab("prose");
+  $("#lesson-selector").classList.add("hidden");
+}
+
+function showSelector() {
+  $("#lesson-selector").classList.remove("hidden");
+}
+
+function route() {
+  const m = location.hash.match(/^#\/?(lesson-[\w-]+)/);
+  if (m) showLesson(m[1]);
+  else showSelector();
+}
+
+function setupBrandBack() {
+  $("#brand-back").addEventListener("click", () => {
+    if (location.hash) {
+      history.pushState(null, "", location.pathname + location.search);
+    }
+    showSelector();
+  });
+}
+
+(async function init() {
+  try {
+    const index = await fetch(LESSONS_INDEX_URL).then((r) => {
+      if (!r.ok) throw new Error("lessons.json fetch failed");
+      return r.json();
+    });
+    State.lessons = index.lessons || [];
+
+    renderLessonSelector(State.lessons);
     setupTabs();
+    setupBrandBack();
     const help = setupHelp();
     setupKeyboard(help);
+    window.addEventListener("hashchange", route);
+    route();
 
     $("#loading").classList.add("hidden");
     setTimeout(() => $("#loading").remove(), 300);
@@ -509,11 +606,7 @@ function escapeHtml(s) {
     $("#loading").innerHTML = `
       <div style="max-width:480px; padding:24px; text-align:center;">
         <div style="font-size:15px; font-weight:600; color:#dc2626; margin-bottom:8px;">教材データの読み込みに失敗しました</div>
-        <div style="font-size:13px; color:#475569; line-height:1.6;">
-          HTTP サーバ経由で開いていますか?<br>
-          <code style="background:#f1f5f9; padding:2px 6px; border-radius:4px;">python -m http.server 8000</code><br>
-          → <code style="background:#f1f5f9; padding:2px 6px; border-radius:4px;">http://localhost:8000/web/</code>
-        </div>
+        <div style="font-size:13px; color:#475569; line-height:1.6;">URL を確認してください。</div>
       </div>
     `;
   }
