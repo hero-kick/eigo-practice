@@ -661,19 +661,30 @@ kbd {
   transform: rotate(0);
 }
 
-/* Role color → underline (::after pseudo for Safari/mobile compatibility)
-   The line extends past each side so adjacent same-role words form a
-   visually continuous bar. */
+/* Role color → underline (::after pseudo for Safari/mobile compatibility).
+   Default: line stays within the word's own box. JS adds .extend-left /
+   .extend-right when the adjacent word has the same role, so the line
+   bridges only over same-role neighbors and never connects different roles. */
 .card-en .word.jot-target[data-jot]:not([data-jot=""])::after {
   content: "";
   position: absolute;
-  left: -4px;
-  right: -4px;
+  left: 0;
+  right: 0;
   bottom: 18px;
   height: 2px;
   border-radius: 1px;
   pointer-events: none;
   background: currentColor;
+}
+.card-en .word.jot-target.extend-left::after {
+  left: -5px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.card-en .word.jot-target.extend-right::after {
+  right: -5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 .card-en .word.jot-target[data-jot="S"]::after { background: var(--role-S); }
 .card-en .word.jot-target[data-jot="V"]::after { background: var(--role-V); }

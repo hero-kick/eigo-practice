@@ -81,11 +81,14 @@ function refreshJotDedup() {
   const cardEn = $("#card-en");
   if (!cardEn) return;
   const words = $$(".word.jot-target", cardEn);
-  let prevRole = "";
-  for (const w of words) {
-    const cur = w.dataset.jot || "";
-    w.classList.toggle("dup-jot", cur !== "" && cur === prevRole);
-    prevRole = cur;
+  for (let i = 0; i < words.length; i++) {
+    const cur = words[i].dataset.jot || "";
+    const prev = i > 0 ? (words[i - 1].dataset.jot || "") : "";
+    const next = i < words.length - 1 ? (words[i + 1].dataset.jot || "") : "";
+    const same = (a, b) => a !== "" && a === b;
+    words[i].classList.toggle("dup-jot", same(cur, prev));
+    words[i].classList.toggle("extend-left", same(cur, prev));
+    words[i].classList.toggle("extend-right", same(cur, next));
   }
 }
 
