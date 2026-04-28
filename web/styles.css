@@ -623,9 +623,15 @@ kbd {
   -webkit-tap-highlight-color: transparent;
   transition: background-color .12s;
   vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
 }
 .card-en .word.jot-target:hover {
   background: rgba(79, 70, 229, 0.06);
+}
+.card-en .word.jot-target.painting {
+  background: rgba(79, 70, 229, 0.12);
 }
 
 .card-en .word.jot-target .jot {

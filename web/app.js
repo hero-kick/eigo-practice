@@ -64,15 +64,62 @@ function renderPassageCard() {
   });
 }
 
-/* ----- Tap-to-jot annotation ----- */
+/* ----- Tap / hold-and-drag to jot annotation -----
+   Tap a single word: cycles its role (? → S → V → O → C → M → ?).
+   Hold and drag across multiple words: paints them all with the same
+   role (the "next role" relative to the first word's current state).
+   Adjacent same-role labels visually form a phrase. */
 const JOT_CYCLE = ["", "S", "V", "O", "C", "M"];
-function cycleJot(span) {
-  const cur = span.dataset.jot || "";
-  const i = JOT_CYCLE.indexOf(cur);
-  const next = JOT_CYCLE[(i + 1) % JOT_CYCLE.length];
-  span.dataset.jot = next;
+function setJot(span, role) {
+  span.dataset.jot = role;
   const jotEl = span.querySelector(".jot");
-  if (jotEl) jotEl.textContent = next;
+  if (jotEl) jotEl.textContent = role;
+}
+
+let _paintRole = null;
+let _paintedWords = null;
+
+function setupJotDragPaint() {
+  const inCardEn = (el) => {
+    const cardEn = $("#card-en");
+    return !!cardEn && cardEn.contains(el);
+  };
+
+  document.addEventListener("pointerdown", (e) => {
+    const word = e.target instanceof Element ? e.target.closest(".word.jot-target") : null;
+    if (!word || !inCardEn(word)) return;
+
+    e.stopPropagation();
+    e.preventDefault();
+
+    const cur = word.dataset.jot || "";
+    const idx = JOT_CYCLE.indexOf(cur);
+    _paintRole = JOT_CYCLE[(idx + 1) % JOT_CYCLE.length];
+    _paintedWords = new Set();
+    setJot(word, _paintRole);
+    word.classList.add("painting");
+    _paintedWords.add(word);
+  });
+
+  document.addEventListener("pointermove", (e) => {
+    if (_paintRole === null || !_paintedWords) return;
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    if (!el) return;
+    const w = el.closest && el.closest(".word.jot-target");
+    if (w && !_paintedWords.has(w) && inCardEn(w)) {
+      setJot(w, _paintRole);
+      w.classList.add("painting");
+      _paintedWords.add(w);
+    }
+  });
+
+  const stop = () => {
+    if (_paintedWords) _paintedWords.forEach((w) => w.classList.remove("painting"));
+    _paintRole = null;
+    _paintedWords = null;
+  };
+  document.addEventListener("pointerup", stop);
+  document.addEventListener("pointercancel", stop);
 }
 
 function renderSegments(el, structure, fallback, sep, opts = {}) {
@@ -98,10 +145,9 @@ function renderSegments(el, structure, fallback, sep, opts = {}) {
           jotEl.className = "jot";
           word.appendChild(jotEl);
 
-          word.addEventListener("click", (e) => {
-            e.stopPropagation();
-            cycleJot(word);
-          });
+          // Click is intercepted at pointerdown (drag-paint). Just stop
+          // propagation so it does not bubble to the card click navigator.
+          word.addEventListener("click", (e) => e.stopPropagation());
 
           segSpan.appendChild(word);
           if (t.space) segSpan.appendChild(document.createTextNode(t.space));
@@ -678,6 +724,7 @@ function setupBrandBack() {
     setupTabs();
     setupBrandBack();
     setupCardInteraction();
+    setupJotDragPaint();
     const help = setupHelp();
     setupKeyboard(help);
     window.addEventListener("hashchange", route);
