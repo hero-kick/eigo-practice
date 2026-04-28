@@ -650,6 +650,7 @@ kbd {
   transform: rotate(-2deg);
   transition: color .15s, opacity .15s;
   white-space: nowrap;
+  text-decoration: none;
 }
 .card-en .word.jot-target[data-jot=""] .jot::before {
   content: "·";
@@ -659,11 +660,45 @@ kbd {
   letter-spacing: 0;
   transform: rotate(0);
 }
+
+/* Role color → underline + jot label color */
+.card-en .word.jot-target[data-jot="S"] {
+  text-decoration: underline solid var(--role-S);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
 .card-en .word.jot-target[data-jot="S"] .jot { color: var(--role-S); }
+
+.card-en .word.jot-target[data-jot="V"] {
+  text-decoration: underline solid var(--role-V);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
 .card-en .word.jot-target[data-jot="V"] .jot { color: var(--role-V); }
+
+.card-en .word.jot-target[data-jot="O"] {
+  text-decoration: underline solid var(--role-O);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
 .card-en .word.jot-target[data-jot="O"] .jot { color: var(--role-O); }
+
+.card-en .word.jot-target[data-jot="C"] {
+  text-decoration: underline solid var(--role-C);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
 .card-en .word.jot-target[data-jot="C"] .jot { color: var(--role-C); }
+
+.card-en .word.jot-target[data-jot="M"] {
+  text-decoration: underline solid var(--role-M);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
 .card-en .word.jot-target[data-jot="M"] .jot { color: var(--role-M); }
+
+/* Adjacent same-role: hide subsequent labels (only first in a run shows) */
+.card-en .word.jot-target.dup-jot .jot { display: none; }
 
 @media (orientation: landscape) and (max-height: 380px) {
   .card-en .word.jot-target { padding-bottom: 14px; }

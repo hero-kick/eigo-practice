@@ -74,6 +74,19 @@ function setJot(span, role) {
   span.dataset.jot = role;
   const jotEl = span.querySelector(".jot");
   if (jotEl) jotEl.textContent = role;
+  refreshJotDedup();
+}
+
+function refreshJotDedup() {
+  const cardEn = $("#card-en");
+  if (!cardEn) return;
+  const words = $$(".word.jot-target", cardEn);
+  let prevRole = "";
+  for (const w of words) {
+    const cur = w.dataset.jot || "";
+    w.classList.toggle("dup-jot", cur !== "" && cur === prevRole);
+    prevRole = cur;
+  }
 }
 
 const DRAG_THRESHOLD = 6; // px — below this, treat the gesture as a tap
