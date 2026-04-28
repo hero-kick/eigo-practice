@@ -2,6 +2,20 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8" />
+  <script>
+    // Auto cache-bust: if the URL's ?v=timestamp is missing or older than
+    // STALE_MS, redirect to the same path with a fresh ?v=Date.now(). This
+    // forces a fresh HTML fetch regardless of browser/proxy caching.
+    (function () {
+      var STALE_MS = 60 * 1000; // 1 minute
+      var p = new URLSearchParams(location.search);
+      var v = parseInt(p.get("v") || "0", 10);
+      if (!v || Date.now() - v > STALE_MS) {
+        p.set("v", Date.now());
+        location.replace(location.pathname + "?" + p.toString() + location.hash);
+      }
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
   <meta name="theme-color" content="#0f172a" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
@@ -11,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+JP:wght@400;500;700&family=Caveat:wght@500;700&display=swap" />
-  <link rel="stylesheet" href="styles.css?v=20" />
+  <link rel="stylesheet" id="app-css" href="styles.css" />
 </head>
 <body>
   <aside class="sidebar">
@@ -211,6 +225,18 @@
     <div class="loading-text">教材を読み込んでいます…</div>
   </div>
 
-  <script src="app.js?v=20"></script>
+  <script>
+    // Bind the URL's ?v= to CSS/JS so they share the same cache key as
+    // the freshly-loaded HTML. Keeps CSS/JS cached within a session,
+    // refreshed when HTML is bumped.
+    (function () {
+      var v = new URLSearchParams(location.search).get("v") || Date.now();
+      var css = document.getElementById("app-css");
+      if (css) css.href = "styles.css?v=" + v;
+      var s = document.createElement("script");
+      s.src = "app.js?v=" + v;
+      document.body.appendChild(s);
+    })();
+  </script>
 </body>
 </html>

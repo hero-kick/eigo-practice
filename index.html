@@ -2,10 +2,15 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8" />
-  <meta http-equiv="refresh" content="0; url=web/" />
   <title>EigoPracitice</title>
+  <script>
+    // Always redirect to /web/ with a unique timestamp so the HTML cache
+    // is bypassed on every visit. The friend never has to clear cache.
+    location.replace("web/?v=" + Date.now());
+  </script>
+  <noscript><meta http-equiv="refresh" content="0; url=web/" /></noscript>
 </head>
 <body>
-  <p>読み込み中… <a href="web/">こちらをクリック</a></p>
+  <noscript><p>JavaScript を有効にしてください。<a href="web/">こちらをクリック</a></p></noscript>
 </body>
 </html>
