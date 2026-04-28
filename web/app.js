@@ -76,6 +76,9 @@ function setJot(span, role) {
   if (jotEl) jotEl.textContent = role;
 }
 
+const DRAG_THRESHOLD = 6; // px — below this, treat the gesture as a tap
+let _gesture = null; // { word, x, y }
+let _painting = false;
 let _paintRole = null;
 let _paintedWords = null;
 
@@ -92,17 +95,33 @@ function setupJotDragPaint() {
     e.stopPropagation();
     e.preventDefault();
 
-    const cur = word.dataset.jot || "";
-    const idx = JOT_CYCLE.indexOf(cur);
-    _paintRole = JOT_CYCLE[(idx + 1) % JOT_CYCLE.length];
-    _paintedWords = new Set();
-    setJot(word, _paintRole);
-    word.classList.add("painting");
-    _paintedWords.add(word);
+    // Don't change anything yet. Decide tap vs drag on movement / release.
+    _gesture = { word, x: e.clientX, y: e.clientY };
+    _painting = false;
+    _paintRole = null;
+    _paintedWords = null;
   });
 
   document.addEventListener("pointermove", (e) => {
-    if (_paintRole === null || !_paintedWords) return;
+    if (!_gesture) return;
+
+    if (!_painting) {
+      const dx = e.clientX - _gesture.x;
+      const dy = e.clientY - _gesture.y;
+      if (Math.hypot(dx, dy) < DRAG_THRESHOLD) return;
+
+      // Movement threshold passed → enter paint mode.
+      // If start is empty, advance to S; otherwise keep current role
+      // so that holding-and-extending an "S" stays "S".
+      const cur = _gesture.word.dataset.jot || "";
+      _paintRole = cur === "" ? JOT_CYCLE[1] : cur;
+      _painting = true;
+      _paintedWords = new Set();
+      setJot(_gesture.word, _paintRole);
+      _gesture.word.classList.add("painting");
+      _paintedWords.add(_gesture.word);
+    }
+
     const el = document.elementFromPoint(e.clientX, e.clientY);
     if (!el) return;
     const w = el.closest && el.closest(".word.jot-target");
@@ -114,7 +133,17 @@ function setupJotDragPaint() {
   });
 
   const stop = () => {
+    // No drag occurred → treat as a single tap on the start word: cycle.
+    if (_gesture && !_painting) {
+      const w = _gesture.word;
+      const cur = w.dataset.jot || "";
+      const idx = JOT_CYCLE.indexOf(cur);
+      const next = JOT_CYCLE[(idx + 1) % JOT_CYCLE.length];
+      setJot(w, next);
+    }
     if (_paintedWords) _paintedWords.forEach((w) => w.classList.remove("painting"));
+    _gesture = null;
+    _painting = false;
     _paintRole = null;
     _paintedWords = null;
   };
