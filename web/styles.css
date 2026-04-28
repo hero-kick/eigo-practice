@@ -662,10 +662,10 @@ kbd {
 }
 
 /* Role color → underline (::after pseudo for Safari/mobile compatibility).
-   Default: line stays within the word's own box. JS adds .extend-left /
-   .extend-right when the adjacent word has the same role, so the line
-   bridges only over same-role neighbors and never connects different roles. */
-.card-en .word.jot-target[data-jot]:not([data-jot=""])::after {
+   Specificity note: the role-color rules below MUST win, so the base rule
+   here uses minimal selectors. The line is invisible (transparent) by
+   default and gains color only when data-jot is set to a role. */
+.card-en .word.jot-target::after {
   content: "";
   position: absolute;
   left: 0;
@@ -674,15 +674,18 @@ kbd {
   height: 2px;
   border-radius: 1px;
   pointer-events: none;
-  background: currentColor;
+  background: transparent;
 }
+/* JS adds .extend-left / .extend-right when adjacent word has SAME role,
+   so the line only bridges same-role neighbors. Different roles stay
+   separated by the natural whitespace gap. */
 .card-en .word.jot-target.extend-left::after {
-  left: -5px;
+  left: -10px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 .card-en .word.jot-target.extend-right::after {
-  right: -5px;
+  right: -10px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
