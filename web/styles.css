@@ -617,7 +617,7 @@ kbd {
   display: inline-block;
   position: relative;
   cursor: pointer;
-  padding: 0 2px 18px;
+  padding: 0 2px 22px;
   margin: 0;
   border-radius: 4px;
   -webkit-tap-highlight-color: transparent;
@@ -661,47 +661,38 @@ kbd {
   transform: rotate(0);
 }
 
-/* Role color → underline + jot label color */
-.card-en .word.jot-target[data-jot="S"] {
-  text-decoration: underline solid var(--role-S);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
+/* Role color → underline (::after pseudo for Safari/mobile compatibility)
+   The line extends past each side so adjacent same-role words form a
+   visually continuous bar. */
+.card-en .word.jot-target[data-jot]:not([data-jot=""])::after {
+  content: "";
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  bottom: 18px;
+  height: 2px;
+  border-radius: 1px;
+  pointer-events: none;
+  background: currentColor;
 }
+.card-en .word.jot-target[data-jot="S"]::after { background: var(--role-S); }
+.card-en .word.jot-target[data-jot="V"]::after { background: var(--role-V); }
+.card-en .word.jot-target[data-jot="O"]::after { background: var(--role-O); }
+.card-en .word.jot-target[data-jot="C"]::after { background: var(--role-C); }
+.card-en .word.jot-target[data-jot="M"]::after { background: var(--role-M); }
+
 .card-en .word.jot-target[data-jot="S"] .jot { color: var(--role-S); }
-
-.card-en .word.jot-target[data-jot="V"] {
-  text-decoration: underline solid var(--role-V);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
-}
 .card-en .word.jot-target[data-jot="V"] .jot { color: var(--role-V); }
-
-.card-en .word.jot-target[data-jot="O"] {
-  text-decoration: underline solid var(--role-O);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
-}
 .card-en .word.jot-target[data-jot="O"] .jot { color: var(--role-O); }
-
-.card-en .word.jot-target[data-jot="C"] {
-  text-decoration: underline solid var(--role-C);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
-}
 .card-en .word.jot-target[data-jot="C"] .jot { color: var(--role-C); }
-
-.card-en .word.jot-target[data-jot="M"] {
-  text-decoration: underline solid var(--role-M);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
-}
 .card-en .word.jot-target[data-jot="M"] .jot { color: var(--role-M); }
 
 /* Adjacent same-role: hide subsequent labels (only first in a run shows) */
 .card-en .word.jot-target.dup-jot .jot { display: none; }
 
 @media (orientation: landscape) and (max-height: 380px) {
-  .card-en .word.jot-target { padding-bottom: 14px; }
+  .card-en .word.jot-target { padding-bottom: 19px; }
+  .card-en .word.jot-target[data-jot]:not([data-jot=""])::after { bottom: 15px; }
   .card-en .word.jot-target .jot { font-size: 14px; }
 }
 
