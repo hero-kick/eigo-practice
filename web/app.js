@@ -80,27 +80,54 @@ function renderSegments(el, structure, fallback, sep, opts = {}) {
   el.innerHTML = "";
   if (Array.isArray(structure) && structure.length > 0) {
     structure.forEach((seg, i) => {
-      const span = document.createElement("span");
-      span.className = `seg seg-${seg.role}${jotTarget ? " jot-target" : ""}`;
-      span.appendChild(document.createTextNode(seg.text));
+      const segSpan = document.createElement("span");
+      segSpan.className = `seg seg-${seg.role}`;
 
       if (jotTarget) {
-        span.dataset.jot = "";
-        const jotEl = document.createElement("span");
-        jotEl.className = "jot";
-        span.appendChild(jotEl);
-        span.addEventListener("click", (e) => {
-          e.stopPropagation();
-          cycleJot(span);
+        // Word-level chips: tokenize segment text into words so the user
+        // can mark each word independently. Adjacent same-role labels
+        // visually form a phrase.
+        const tokens = tokenizeWords(seg.text);
+        tokens.forEach((t, j) => {
+          const word = document.createElement("span");
+          word.className = "word jot-target";
+          word.dataset.jot = "";
+          word.appendChild(document.createTextNode(t.word));
+
+          const jotEl = document.createElement("span");
+          jotEl.className = "jot";
+          word.appendChild(jotEl);
+
+          word.addEventListener("click", (e) => {
+            e.stopPropagation();
+            cycleJot(word);
+          });
+
+          segSpan.appendChild(word);
+          if (t.space) segSpan.appendChild(document.createTextNode(t.space));
         });
+      } else {
+        segSpan.textContent = seg.text;
       }
 
-      el.appendChild(span);
+      el.appendChild(segSpan);
       if (sep && i < structure.length - 1) el.appendChild(document.createTextNode(sep));
     });
   } else {
     el.textContent = fallback;
   }
+}
+
+function tokenizeWords(text) {
+  // Split into [{word, space}] preserving punctuation attached to words
+  // and the whitespace that follows each word.
+  const result = [];
+  const re = /(\S+)(\s*)/g;
+  let m;
+  while ((m = re.exec(text)) !== null) {
+    result.push({ word: m[1], space: m[2] });
+  }
+  return result;
 }
 
 function navigateCard(delta) {

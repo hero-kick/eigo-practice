@@ -611,24 +611,24 @@ kbd {
 }
 
 /* ----- Tap-to-jot annotation (handwritten note style) -----
-   Each card-en segment is a small tap target with a "jot" label below
-   that the user fills in by tapping (cycles through S/V/O/C/M). */
-.card-en .seg.jot-target {
+   Each word is its own small tap target. Adjacent same-role words
+   visually form a phrase. */
+.card-en .word.jot-target {
   display: inline-block;
   position: relative;
   cursor: pointer;
-  padding: 0 3px 18px;
-  margin: 0 -1px;
+  padding: 0 2px 18px;
+  margin: 0;
   border-radius: 4px;
   -webkit-tap-highlight-color: transparent;
   transition: background-color .12s;
-  vertical-align: top;
+  vertical-align: baseline;
 }
-.card-en .seg.jot-target:hover {
+.card-en .word.jot-target:hover {
   background: rgba(79, 70, 229, 0.06);
 }
 
-.card-en .seg.jot-target .jot {
+.card-en .word.jot-target .jot {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -643,23 +643,25 @@ kbd {
   pointer-events: none;
   transform: rotate(-2deg);
   transition: color .15s, opacity .15s;
+  white-space: nowrap;
 }
-.card-en .seg.jot-target[data-jot=""] .jot::before {
+.card-en .word.jot-target[data-jot=""] .jot::before {
   content: "·";
-  opacity: 0.25;
+  opacity: 0.22;
   font-family: var(--font-sans);
   font-size: 14px;
   letter-spacing: 0;
+  transform: rotate(0);
 }
-.card-en .seg.jot-target[data-jot="S"] .jot { color: var(--role-S); }
-.card-en .seg.jot-target[data-jot="V"] .jot { color: var(--role-V); }
-.card-en .seg.jot-target[data-jot="O"] .jot { color: var(--role-O); }
-.card-en .seg.jot-target[data-jot="C"] .jot { color: var(--role-C); }
-.card-en .seg.jot-target[data-jot="M"] .jot { color: var(--role-M); }
+.card-en .word.jot-target[data-jot="S"] .jot { color: var(--role-S); }
+.card-en .word.jot-target[data-jot="V"] .jot { color: var(--role-V); }
+.card-en .word.jot-target[data-jot="O"] .jot { color: var(--role-O); }
+.card-en .word.jot-target[data-jot="C"] .jot { color: var(--role-C); }
+.card-en .word.jot-target[data-jot="M"] .jot { color: var(--role-M); }
 
 @media (orientation: landscape) and (max-height: 380px) {
-  .card-en .seg.jot-target { padding-bottom: 14px; }
-  .card-en .seg.jot-target .jot { font-size: 14px; }
+  .card-en .word.jot-target { padding-bottom: 14px; }
+  .card-en .word.jot-target .jot { font-size: 14px; }
 }
 
 @media (orientation: landscape) and (max-height: 380px) {
